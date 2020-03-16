@@ -3,12 +3,39 @@
     <head>
         <title>piccolowen - home</title>
         <div class="navbar">
-            <h1><a href="index.html">piccolowen</a> | <a href="programs.html">programs</a> | <a>music</a></h1>
+            <h1 class="navbar-content"><a href="index.html">piccolowen</a> | <a href="programs.html">programs</a> | <a>music</a> <a class="special-navbar-button">help</a></h1>
         </div>
     </head>
 </html>
 <style>
     .navbar {
         background-color: grey;
+    }
+    html {
+        font-family: Arial, Helvetica, sans-serif;
+        text-decoration: none;
+    }
+    .navbar-content {
+        font-size: 60px;
+    }
+    a {
+        text-decoration: none;
+        color: black;
+        font-size: 50px;
+    }
+    a:hover {
+        transition: 300ms ease-out;
+        -webkit-transition: 300ms ease-out;
+        -moz-transition: 300ms ease-out;
+        -o-transition: 300ms ease-out;
+        color: blue;
+        font-size: 55px;
+    }
+    a:active {
+        color: black;
+    }
+    .special-navbar-button {
+        font-size: 25px;
+        text-align: right;
     }
 </style>
