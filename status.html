@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>status - access the status of Discord and others</title>
+    </head>
+    <body>
+        <p id="discord-status"></p>
+        <script type="text/javascript" src="https://cdn.statuspage.io/se-v2.js"></script>
+        <script>
+            var sp = new StatusPage.page({ page: 'srhpyqt94yxb' });
+            sp.status({
+                success: function (data) {
+                    console.log("current status of discord: " + data.status.indicator);
+                    var status = '<p>current status of discord: <b>' + data.status.indicator + '</b></p>';
+                    var el = document.getElementById('discord-status');
+                    el.innerHTML = status;
+                }
+            });
+        </script>
+    </body>
+</html>
