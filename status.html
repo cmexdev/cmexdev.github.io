@@ -4,18 +4,30 @@
         <title>status - access the status of Discord and others</title>
     </head>
     <body>
-        <p id="discord-status"></p>
+        <p id="discord-status-components">loading...</p>
+        <p id="discord-status-indicator"><loading class=""></loading></p>
         <script type="text/javascript" src="https://cdn.statuspage.io/se-v2.js"></script>
+
         <script>
             var sp = new StatusPage.page({ page: 'srhpyqt94yxb' });
-            sp.status({
-                success: function (data) {
-                    console.log("current status of discord: " + data.status.indicator);
-                    var status = '<p>current status of discord: <b>' + data.status.indicator + '</b></p>';
-                    var el = document.getElementById('discord-status');
-                    el.innerHTML = status;
-                }
-            });
+                sp.summary({
+                    success: function (data) {
+                        console.log(data.components[0].status);
+                        var msg = '<p>discord status: <b>' + data.components[0].status + '</b></p>';
+                        var el = document.getElementById('discord-status-components');
+                        el.innerHTML = msg;
+                    }
+                });
+            var sp = new StatusPage.page({ page: 'srhpyqt94yxb' });
+                sp.status({
+                    success: function (data) {
+                        console.log(data.status.indicator);
+                        var msg = '<p>discord status: <b>' + data.status.indicator + '</b></p>';
+                        var el = document.getElementById('discord-status-indicator');
+                        el.innerHTML = msg;
+                    }
+                });
         </script>
+
     </body>
 </html>
