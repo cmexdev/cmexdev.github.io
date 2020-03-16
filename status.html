@@ -4,15 +4,23 @@
         <title>status - access the status of Discord and others</title>
     </head>
     <body>
+        <div class="discord-status">
+            <p id="discord-status-summary"></p>
+        </div>
         <p id="discord-status-components">loading...</p>
-        <p id="discord-status-indicator"><loading class=""></loading></p>
-        <script type="text/javascript" src="https://cdn.statuspage.io/se-v2.js"></script>
+        <p id="discord-status-indicator">loading...</p>
 
+        <script type="text/javascript" src="https://cdn.statuspage.io/se-v2.js"></script>
         <script>
             var sp = new StatusPage.page({ page: 'srhpyqt94yxb' });
                 sp.summary({
                     success: function (data) {
                         console.log(data.components[0].status);
+                        if (data.components[0].status = 'operational') {
+                            var sum = '<h3 class="discord-status-sum-good">Discord is <i>' + data.components[0].status + '</i>!</h3>';
+                            var elsum = document.getElementById('discord-status-summary');
+                            elsum.innerHTML = sum;
+                        }
                         var msg = '<p>discord status: <b>' + data.components[0].status + '</b></p>';
                         var el = document.getElementById('discord-status-components');
                         el.innerHTML = msg;
@@ -28,6 +36,15 @@
                     }
                 });
         </script>
+        
+        <a href="status.discordapp.com">view the official status page</a>
 
     </body>
 </html>
+<style>
+    .discord-status-sum-good {
+        color: white;
+        background-color: green;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+</style>
