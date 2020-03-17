@@ -4,15 +4,16 @@
         <title>status - access the status of Discord and others</title>
     </head>
     <body>
-        <div class="discord-status">
-            <p id="discord-status-summary"></p>
-        </div>
-        <p id="discord-status-components">loading...</p>
-        <p id="discord-status-indicator">loading...</p>
-
-        <script type="text/javascript" src="https://cdn.statuspage.io/se-v2.js"></script>
-        <script>
-            var sp = new StatusPage.page({ page: 'srhpyqt94yxb' });
+        <div class="discordstatus-sum-main">
+            <div class="discord-status">
+                <p id="discord-status-summary"></p>
+            </div>
+            <p id="discord-status-components">loading...</p>
+            <p id="discord-status-indicator">loading...</p>
+            
+            <script type="text/javascript" src="https://cdn.statuspage.io/se-v2.js"></script>
+            <script>
+                var sp = new StatusPage.page({ page: 'srhpyqt94yxb' });
                 sp.summary({
                     success: function (data) {
                         console.log(data.components[0].status);
@@ -21,12 +22,17 @@
                             var elsum = document.getElementById('discord-status-summary');
                             elsum.innerHTML = sum;
                         }
+                        else {
+                            var sum = '<h3 class="discord-status-sum-else">Discord is <i>' + data.components[0].status + '</i>!</h3>';
+                            var elsum = document.getElementById('discord-status-summary');
+                            elsum.innerHTML = sum;
+                        }
                         var msg = '<p>discord status: <b>' + data.components[0].status + '</b></p>';
                         var el = document.getElementById('discord-status-components');
                         el.innerHTML = msg;
                     }
                 });
-            var sp = new StatusPage.page({ page: 'srhpyqt94yxb' });
+                var sp = new StatusPage.page({ page: 'srhpyqt94yxb' });
                 sp.status({
                     success: function (data) {
                         console.log(data.status.indicator);
@@ -35,16 +41,42 @@
                         el.innerHTML = msg;
                     }
                 });
-        </script>
-        
-        <a href="https://status.discordapp.com/">view the official status page</a>
+            </script>
+            
+            <a href="https://status.discordapp.com/">view the official status page</a>
+            <style>
+                .discord-status-sum-good {
+                    color: white;
+                    background-color: green;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                }
+                .discord-status-sum-else {
+                    color: white;
+                    background-color: orangered;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                }
+                .discordstatus-sum-main {
+                    color: black;
+                    background-color: white;
+                    border-radius: 5px;
+                    border-color: black;
+                    border-style: solid;
+                }
+            </style>
+        </div>
 
     </body>
 </html>
 <style>
-    .discord-status-sum-good {
-        color: white;
-        background-color: green;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    a {
+        color: black;
+        border-radius: 5px;
+        border-color: blue;
+        border-style: solid;
+        text-decoration: none;
+    }
+    a:hover {
+        transition: 300ms;
+        background-color: red;
     }
 </style>
