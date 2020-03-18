@@ -2,40 +2,47 @@
 <html>
     <head>
         <title>piccolowen - home</title>
-        <div class="navbar">
-            <h1 class="navbar-content"><a href="index.html">piccolowen</a> | <a href="programs.html">programs</a> | <a href="music.html">music</a> | <a href="status.html">status</a></h1>
-        </div>
     </head>
+    <body>
+        <div class="navbar">
+            <h1 class="navbar-content"><a href="index.html">piccolowen</a> <dialog>test</dialog> | <a href="programs.html">programs</a> | <a href="music.html">music</a> | <a href="status.html">status</a></h1>
+        </div>
+    </body>
 </html>
 <style>
     .navbar {
-        background-color: grey;
+        background-color: white;
+        overflow: hidden;
+        display: block;
     }
     html {
         font-family: Arial, Helvetica, sans-serif;
         text-decoration: none;
+        padding: 0px;
     }
     .navbar-content {
         font-size: 60px;
+        padding: 1px;
+    }
+    .navbar-content:hover {
+        cursor: default;
     }
     a {
         text-decoration: none;
         color: black;
         font-size: 50px;
+        border: black;
+        border-radius: 5px;
+        border-style: solid;
+        padding: 5px;
     }
     a:hover {
         transition: 300ms ease-out;
-        -webkit-transition: 300ms ease-out;
-        -moz-transition: 300ms ease-out;
-        -o-transition: 300ms ease-out;
-        color: blue;
+        background-color: darkblue;
+        color: white;
         font-size: 55px;
     }
     a:active {
         color: black;
-    }
-    .special-navbar-button {
-        font-size: 25px;
-        text-align: right;
     }
 </style>
