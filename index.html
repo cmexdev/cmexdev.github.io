@@ -35,12 +35,16 @@
         border-radius: 5px;
         border-style: solid;
         padding: 5px;
+        box-shadow: 9px 9px grey;
     }
     a:hover {
-        transition: 300ms ease-out;
+        transition: all 300ms;
         background-color: darkblue;
         color: white;
         font-size: 55px;
+    }
+    a:hover::after {
+        transition: all 300ms;
     }
     a:active {
         color: black;
