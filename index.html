@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
     <head>
         <title>piccolowen - home</title>
     </head>
     <body>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <div class="navbar">
             <h1 class="navbar-content">
                 <div class="navbar-links">
@@ -15,19 +16,26 @@
                 </div>
             </h1>
         </div>
-        <p class="content-break">- - - - - - - - - - - - -</p>
+        <hr class="content-break">
         <div class="main-content">
             <div class="content-main-focus">
-                <img src="https://img.icons8.com/color/48/000000/code.png" alt="icon" />
-                <h1>heyo!</h1>
-                <p>this page is under <b>heavy</b> development, so check back soon for full access! <a href="developments.html">learn more</a></p>
+                <div class="content-main-focus-pagedev">
+                    <img src="https://img.icons8.com/color/48/000000/code.png" alt="icon" />
+                    <h1>heyo!</h1>
+                    <p>this page is under <b>heavy</b> development, so check back soon for full access! <a href="developments.html">learn more</a></p>
+                </div>
             </div>
         </div>
+        <hr class="content-break>
         <div class="fobar">
             <div class="navfobar">
                 <table class="navfobar-table">
-                    <li class="navfobar-list-start">resources</li>
-                    <li><a href="https://icons8.com/icons" class="navfobar-link">Icons8</a></li>
+                    <tr>
+                        <th class="navfobar-list-start">resources</th>
+                    </tr>
+                    <tr>
+                        <td> <a href="https://icons8.com/icons" target="_blank"class="navfobar-link">Icons8</a></td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -109,5 +117,18 @@
     }
     a:hover {
         color: blue;
+    }
+    table, th, td {
+        border: black;
+        border-style: solid;
+        border-width: 1px;
+        border-collapse: collapse;
+    }
+    table {
+        width: 100%;
+        border-spacing: 1px;
+    }
+    th {
+        background-color: grey;
     }
 </style>
