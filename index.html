@@ -27,7 +27,7 @@
                     <a href="programs.html" class="navbar-link" title="check out code i've written">programs</a> 
                     <a href="music.html" class="navbar-link" title="music i make and like">music</a> 
                     <a href="status.html" class="navbar-link" title="check the status of the internet">status</a> 
-                    <a href="#" class="navbar-link" title="unsorted pages">other</a>
+                    <a href="404.html" class="navbar-link" title="unsorted pages">other</a>
                 </div>
             </h1>
         </div>
@@ -48,6 +48,7 @@
                     <tr>
                         <th class="navfobar-list-start">resources</th>
                         <th>info</th>
+                        <th>code</th>
                     </tr>
                     <tr>
                         <td> <a href="https://icons8.com/icons" target="_blank"class="navfobar-link">Icons8</a></td>
@@ -56,36 +57,35 @@
                     <tr>
                         <td> <a href="https://github.com/Piccolowen/piccolowen.github.io">GitHub repository</a></td>
                     </tr>
+                    <tr>
+
+                    </tr>
                 </table>
             </div>
         </div>
     </body>
 </html>
 <style>
+    html {
+        font-family: Arial, Helvetica, sans-serif;
+        text-decoration: none;
+        padding: 0px;
+    }
     .navbar {
         display: block;
         text-align: center;
         border: black;
         border-radius: 10px;
         border-style: solid;
-        font-size: 1vw;
-        height: 200px;
-    }
-    html {
-        font-family: Arial, Helvetica, sans-serif;
-        text-decoration: none;
-        padding: 0px;
-        overflow: hidden;
     }
     .navbar-content {
         font-size: 60px;
-        padding: 1px 1px;
     }
     .navbar-content:hover {
         cursor: default;
     }
     .navbar-links {
-        overflow: hidden;
+        padding: 0px;
     }
     .navbar-link {
         text-decoration: none;
@@ -94,34 +94,17 @@
         border: black;
         border-radius: 5px;
         border-style: solid;
-        padding: 5px;
+        padding: 2px;
         box-shadow: 4px 4px grey;
         transition: all 300ms;
-        overflow: hidden;
-        display: inline-block;
     }
     .navbar-link:hover {
         background-color: darkblue;
         color: white;
         font-size: 60px;
     }
-    .navbar-link:hover::after {
-        transition: all 300ms;
-    }
     .navbar-link:active {
         color: black;
-    }
-    .navfobar-link {
-        text-decoration: none;
-        color: blue;
-        font-size: initial;
-        transition: 300ms;
-    }
-    .navfobar-link:hover {
-        color: red;
-    }
-    .navfobar-list-start {
-        font-style:oblique;
     }
     .main-content {
         text-align: center;
@@ -139,11 +122,11 @@
     }
     a {
         text-decoration: none;
-        color: red;
+        color: blue;
         transition: 300ms;
     }
     a:hover {
-        color: blue;
+        color: red;
     }
     table, th, td {
         border: black;
@@ -153,7 +136,9 @@
     }
     table {
         width: 100%;
-        border-spacing: 1px;
+    }
+    th, td {
+        padding: 5px;
     }
     th {
         background-color: grey;
