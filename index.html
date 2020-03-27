@@ -7,6 +7,12 @@
         <div id="alerts"></div>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script>
+            console.log(navigator.appName);
+            console.log(navigator.appVersion);
+            console.log(navigator.appCodeName);
+            if (navigator.appName == "j") {
+                document.getElementById('alerts').innerHTML = '<h1 class="alert"You are using Chrome!</h1>';
+            }
             if (typeof (Storage) !== "undefined") {
                     //storage good
                 } 
@@ -24,7 +30,7 @@
             <h1 class="navbar-content">
                 <div class="navbar-links">
                     <a href="index.html" class="navbar-link" title="home page">piccolowen</a> 
-                    <a href="programs.html" class="navbar-link" title="check out code i've written">programs</a> 
+                    <a href="code.html" class="navbar-link" title="check out code i've written">code</a> 
                     <a href="music.html" class="navbar-link" title="music i make and like">music</a> 
                     <a href="status.html" class="navbar-link" title="check the status of the internet">status</a> 
                     <a href="404.html" class="navbar-link" title="unsorted pages">other</a>
@@ -37,7 +43,7 @@
                 <div class="content-main-focus-pagedev">
                     <img src="https://img.icons8.com/color/48/000000/code.png" alt="icon" />
                     <h1>heyo!</h1>
-                    <p>this page is under <b>heavy</b> development, so check back soon for full access! <a href="developments.html">learn more</a></p>
+                    <p>this site is under <b>heavy</b> development, so check back soon for full access! <a href="developments.html">learn more</a></p>
                 </div>
             </div>
         </div>
@@ -52,10 +58,11 @@
                     </tr>
                     <tr>
                         <td> <a href="https://icons8.com/icons" target="_blank"class="navfobar-link">Icons8</a></td>
-                        <td>about us</td>
+                        <td><a href="about.html">about us</a></td>
                     </tr>
                     <tr>
                         <td> <a href="https://github.com/Piccolowen/piccolowen.github.io">GitHub repository</a></td>
+                        <td> <a href="https://docs.google.com/forms/d/e/1FAIpQLSf55DzItojIdHmXbfHW64Ea-XWDFiZbZ6937Kdd_H2FB49ESg/viewform?usp=sf_link">feedback form</a></td>
                     </tr>
                     <tr>
 
