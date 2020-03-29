@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>programs - piccolowen</title>
+    </head>
+    <body>
+        <link href="../navbar.html" rel="import">
+        <script>
+            var extern = document.getElementsByTagName("link")[0].import;
+            var absatz = extern.getElementsByTagName("navbar")[0];
+            window.addEventListener("load", function () {
+                    document.getElementsByTagName("navbar")[0].replaceChild(extern.getElementsByTagName("navbar")[0], document.getElementsByTagName("navbar")[0]);
+                }, false);
+        </script>
+        <h1 class="navbar"></h1>
+        <div class="code">
+            <h3 class="code-title">scripto</h3>
+            <p class="code-description">create code effortlessly</p>
+            <button class="code-button"><a class="code-button-link" href="scripto/index.html">check it out</a></button>
+        </div>
+        <hr>
+        <div class="code">
+            <h3 class="code-title">that's a noice skin you got there</h3>
+            <p class="code-description">noice: <a href="https://www.rainmeter.net/" target="_blank">Rainmeter</a> skin</p>
+            <button class="code-button"><a class="code-button-link" href="noice-rainmeter-skin.html">check it out</a></button>
+        </div>
+    </body>
+</html>
+<style>
+    html {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .code {
+        text-align: center;
+    }
+    .code-title {
+        font-size: 75px;
+        font-weight: bold;
+        padding: 0px;
+        }
+    .code-description {
+        font-size: 30px;
+        color: black;
+    }
+    .code-button {
+        font-size: 25px;
+        border-radius: 2px;
+        border: red;
+        border-style: solid;
+    }
+    .code-button-link {
+        text-decoration: none;
+        color: black;
+    }
+    .code-button-link:hover {
+        color: white;
+    }
+    .code-button:hover {
+        transition: 500ms;
+        background-color: blue;
+    }
+    a {
+        color: blue;
+        text-decoration: none;
+    }
+    a:hover {
+        color: red;
+    }
+    .page-nav:hover {
+        cursor: default;
+    }
+    .page-nav {
+        background-color: grey;
+    }
+</style>
