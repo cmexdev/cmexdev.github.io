@@ -5,12 +5,10 @@
     </head>
     <body>
         <link href="../navbar.html" rel="import">
-        <script>
-            var extern = document.getElementsByTagName("link")[0].import;
-            var absatz = extern.getElementsByTagName("navbar")[0];
-            window.addEventListener("load", function () {
-                    document.getElementsByTagName("navbar")[0].replaceChild(extern.getElementsByTagName("navbar")[0], document.getElementsByTagName("navbar")[0]);
-                }, false);
+        <script src="../src/jquery-3.4.1.js">
+            $(function () {
+                    $("#includedContent").load("b.html");
+                });
         </script>
         <h1 class="navbar"></h1>
         <div class="code">
