@@ -5,6 +5,8 @@
     </head>
     <body>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <p id="navbar"></p>
+        <script src="src/navbar.js"></script>
         <div class="discordstatus-sum-main">
             <div class="discord-status">
                 <p id="discord-status-summary"></p>
@@ -76,9 +78,11 @@
     </body>
 </html>
 <style>
+    html {
+        font-family: Arial, Helvetica, sans-serif;
+    }
     a {
         color: blue;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         text-decoration: none;
         transition: 300ms;
     }
