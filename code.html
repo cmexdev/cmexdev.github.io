@@ -21,20 +21,62 @@
             <button class="code-button"><a class="code-button-link" href="noice-rainmeter-skin.html">check it out</a></button>
         </div>
         <div class="github-repositories">
-            <button id="btnRepos">view repos</button>
             <div class="api-results" id="divResults">
+            <p id="repo-api-result"></p>
 
             </div>
+
+            <script>
+                window.onload = getapitest()
+                async function getapitest() {
+                        const url = "https://api.github.com/search/repositories?q=user:piccolowen"
+
+                        const response = await fetch(url)
+                        const result = await response.json()
+
+                        console.log("GitHub API fetch(filter 'user:piccolowen'):")
+                        console.log(result)
+
+                        result.items.forEach(i => {
+                            const anchor = document.createElement("a")
+
+                            anchor.href = i.html_url
+                            anchor.className = "apititle"
+                            anchor.textContent = i.name
+                            divResult.appendChild(anchor)
+                            divResult.appendChild(document.createElement("br"))
+                            divResult.appendChild(document.createTextNode(i.full_name))
+                            divResult.appendChild(document.createElement("br"))
+                            divResult.appendChild(document.createTextNode("lang " + i.language))
+                            divResult.appendChild(document.createElement("br"))
+                            divResult.appendChild(document.createTextNode("issues " + i.open_issues))
+                            divResult.appendChild(document.createElement("br"))
+                            divResult.appendChild(document.createTextNode("last updated at " + i.updated_at))
+                            divResult.appendChild(document.createElement("br"))
+                            divResult.appendChild(document.createTextNode("created on " + i.created_at))
+                            divResult.appendChild(document.createElement("br"))
+                            divResult.appendChild(document.createTextNode("description " + i.description))
+                            divResult.appendChild(document.createElement("br"))
+
+                            var navbar = i.name;
+                            var el = document.getElementById('repo-api-result');
+                            el.innerHTML = navbar;
+                        })
+                    }
+            </script>
+
+
             <script>
                 const btnRepos = document.getElementById('btnRepos');
                 const divResult = document.getElementById("divResults")
-                btnRepos.addEventListener("click", getapi)
-                async function getapi() {
+                btnRepos.addEventListener("click", getapidisabled)
+                async function getapidisabled() {
                     const url = "https://api.github.com/search/repositories?q=user:piccolowen"
 
                     const response = await fetch(url)
                     const result = await response.json()
 
+                    console.log("GitHub API fetch(filter 'user:piccolowen'):")
                     console.log(result)
 
                     result.items.forEach(i=>{
@@ -45,12 +87,22 @@
                         anchor.textContent = i.name
                         divResult.appendChild(anchor)
                         divResult.appendChild(document.createElement("br"))
+                        divResult.appendChild(document.createTextNode(i.full_name))
+                        divResult.appendChild(document.createElement("br"))
+                        divResult.appendChild(document.createTextNode("lang " + i.language))
+                        divResult.appendChild(document.createElement("br"))
+                        divResult.appendChild(document.createTextNode("issues " + i.open_issues))
+                        divResult.appendChild(document.createElement("br"))
                         divResult.appendChild(document.createTextNode("last updated at " + i.updated_at))
                         divResult.appendChild(document.createElement("br"))
                         divResult.appendChild(document.createTextNode("created on " + i.created_at))
                         divResult.appendChild(document.createElement("br"))
                         divResult.appendChild(document.createTextNode("description " + i.description))
                         divResult.appendChild(document.createElement("br"))
+
+                        var navbar = 'content';
+                        var el = document.getElementById('repo-api-result');
+                        el.innerHTML = navbar;
                     })
                 }
             </script>
