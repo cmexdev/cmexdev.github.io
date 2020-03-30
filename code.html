@@ -7,7 +7,6 @@
         <div class="navbarsys">
             <p id="navbar" style="font-family: Arial, Helvetica, sans-serif;color:red;">NAVBAR ERROR: PLEASE ENABLE JAVASCRIPT
             </p>
-            <script src="../src/navbar.js"></script>
         </div>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <div class="code">
@@ -20,6 +19,51 @@
             <h3 class="code-title">that's a noice skin you got there</h3>
             <p class="code-description">noice: <a href="https://www.rainmeter.net/" target="_blank">Rainmeter</a> skin</p>
             <button class="code-button"><a class="code-button-link" href="noice-rainmeter-skin.html">check it out</a></button>
+        </div>
+        <div class="github-repositories">
+            <!--<script src="src/jquery-3.4.1.js">
+
+                $(function () {
+
+
+                        var people = [];
+
+                        $.getJSON('people.json', function (data) {
+                            $.each(data.person, function (i, f) {
+                                var tblRow = "<tr>" + "<td>" + f.firstName + "</td>" +
+                                    "<td>" + f.lastName + "</td>" + "<td>" + f.job + "</td>" + "<td>" + f.roll + "</td>" + "</tr>"
+                                $(tblRow).appendTo("#userdata tbody");
+                            });
+
+                        });
+
+                });
+
+            </script>-->
+            <button id="btnRepos">repos</button>
+            <div class="api-results" id="divResults">
+
+            </div>
+            <script>
+                const btnRepos = document.getElementById('btnRepos');
+                const divResult = document.getElementById("divResults")
+                btnRepos.addEventListener("click", getapi)
+                async function getapi() {
+                    const url = "https://api.github.com/search/repositories?q=user:piccolowen"
+                    const response = await fetch(url)
+                    const result = await response.json()
+
+                    console.log(result)
+
+                    result.items.forEach(i=>{
+                        const anchor = document.createElement("a")
+                        anchor.href = i.html_rul
+                        anchor.textContent = i.full_name
+                        divResult.appendChild(anchor)
+                        divResult.appendChild(document.createElement("br"))
+                    })
+                }
+            </script>
         </div>
     </body>
 </html>
