@@ -21,26 +21,7 @@
             <button class="code-button"><a class="code-button-link" href="noice-rainmeter-skin.html">check it out</a></button>
         </div>
         <div class="github-repositories">
-            <!--<script src="src/jquery-3.4.1.js">
-
-                $(function () {
-
-
-                        var people = [];
-
-                        $.getJSON('people.json', function (data) {
-                            $.each(data.person, function (i, f) {
-                                var tblRow = "<tr>" + "<td>" + f.firstName + "</td>" +
-                                    "<td>" + f.lastName + "</td>" + "<td>" + f.job + "</td>" + "<td>" + f.roll + "</td>" + "</tr>"
-                                $(tblRow).appendTo("#userdata tbody");
-                            });
-
-                        });
-
-                });
-
-            </script>-->
-            <button id="btnRepos">repos</button>
+            <button id="btnRepos">view repos</button>
             <div class="api-results" id="divResults">
 
             </div>
@@ -50,6 +31,7 @@
                 btnRepos.addEventListener("click", getapi)
                 async function getapi() {
                     const url = "https://api.github.com/search/repositories?q=user:piccolowen"
+
                     const response = await fetch(url)
                     const result = await response.json()
 
@@ -57,9 +39,17 @@
 
                     result.items.forEach(i=>{
                         const anchor = document.createElement("a")
-                        anchor.href = i.html_rul
-                        anchor.textContent = i.full_name
+
+                        anchor.href = i.html_url
+                        anchor.className = "apititle"
+                        anchor.textContent = i.name
                         divResult.appendChild(anchor)
+                        divResult.appendChild(document.createElement("br"))
+                        divResult.appendChild(document.createTextNode("last updated at " + i.updated_at))
+                        divResult.appendChild(document.createElement("br"))
+                        divResult.appendChild(document.createTextNode("created on " + i.created_at))
+                        divResult.appendChild(document.createElement("br"))
+                        divResult.appendChild(document.createTextNode("description " + i.description))
                         divResult.appendChild(document.createElement("br"))
                     })
                 }
@@ -106,5 +96,8 @@
     }
     a:hover {
         color: red;
+    }
+    .apititle {
+        font-size: 50px;
     }
 </style>
