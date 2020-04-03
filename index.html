@@ -2,27 +2,36 @@
 <html lang="en-US">
     <head>
         <title>piccolowen - home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="src/icon.png">
     </head>
     <body>
         <div id="alerts">
             <noscript class="alert">no JavaScript detected! please consider enabling it for this site. we promise we're not evil!</noscript>
-        </div>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script>
-            console.log(navigator.appName);
-            console.log(navigator.appVersion);
-            console.log(navigator.appCodeName);
-            if (typeof (Storage) !== "undefined") {
+            <script>
+                console.log(navigator.appName);
+                console.log(navigator.appVersion);
+                console.log(navigator.appCodeName);
+                if (typeof (Storage) !== "undefined") {
                     console.log('storage ok');
-            } else {
-                document.getElementById('alerts').innerHTML = '<h1 class="alert">Web storage unavailable! <a class="alert-link">Learn more.</a></h1>';
-            }
-            if (typeof(Worker) !== "undefined") {
-                console.log('worker ok');
-            } else {
-                document.getElementById('alerts').innerHTML = '<h1 clas="alert">Web worker unavailable! <a class="alert-link">Learn more.</a></h1>';
-            }
-        </script>
+                } else {
+                    document.getElementById('alerts').innerHTML = '<h1 class="alert">Web storage unavailable! <a class="alert-link">Learn more.</a></h1>';
+                }
+                if (typeof (Worker) !== "undefined") {
+                    console.log('worker ok');
+                } else {
+                    document.getElementById('alerts').innerHTML = '<h1 clas="alert">Web worker unavailable! <a class="alert-link">Learn more.</a></h1>';
+                }
+            </script>
+        </div>
+        <div class="logo">
+            <h1 class="logo-el">
+                <div class="logo-container">
+                    <a class="logo-a">piccolowen</a>
+                </div>
+            </h1>
+        </div>
+        <hr>
         <div class="navbar">
             <h1 class="navbar-content">
                 <div class="navbar-links">
@@ -48,10 +57,9 @@
         <div class="main-content">
             <div class="content-main-focus">
                 <div class="content-main-focus-pagedev">
-                    <img src="https://img.icons8.com/flat_round/64/000000/error--v1.png" />
+                    <img src="https://img.icons8.com/flat_round/64/000000/error--v1.png" alt="icon" />
                     <h1 style="color: red;">notice!</h1>
-                    <p>on some pages the <code>navbar</code> might not work properly. this is because of a shared <code>.js</code> file <a
-                            href="index/navbarerror.html">learn more</a></p>
+                    <p>on some pages the <code>navbar</code> might not work properly. this is because of a shared <code>.js</code> file <a href="index/navbarerror.html">learn more</a></p>
                 </div>
             </div>
         </div>
@@ -90,6 +98,7 @@
         font-family: Arial, Helvetica, sans-serif;
         text-decoration: none;
         padding: 0px;
+        width: 100%;
     }
     .navbar {
         display: block;
@@ -172,5 +181,31 @@
     }
     .alert-link {
         color: blue;
+    }
+    .logo {
+        text-align: center;
+        transition: 300ms;
+        border: black;
+        border-radius: 10px;
+        border-style: solid;
+        font-size: 60px;
+        overflow: hidden;
+    }
+    .logo:hover {
+        cursor: default;
+    }
+    .logo-a {
+        font-size: 100px;
+        color: black;
+        border: black;
+        border-radius: 5px;
+        border-style: solid;
+        padding: 2px;
+        box-shadow: 4px 4px grey;
+    }
+    .logo-a:hover {
+        color: white;
+        background-color: darkblue;
+        font-size: 110px;
     }
 </style>
