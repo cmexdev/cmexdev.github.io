@@ -27,6 +27,7 @@
         <div class="logo">
             <h1 class="logo-el">
                 <div class="logo-container">
+                    <!--<img src="src/logobg.png" class="logoimg">-->
                     <a class="logo-a">piccolowen</a>
                     <p class="logo-a2">nerd extreme lite</p>
                 </div>
@@ -184,13 +185,17 @@
         color: blue;
     }
     .logo {
-        text-align: center;
         transition: 300ms;
         border: black;
         border-radius: 10px;
         border-style: solid;
         font-size: 60px;
         overflow: hidden;
+        background-image: url("src/logobg2.png");
+        image-orientation: 90deg;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        text-align: center;
     }
     .logo:hover {
         cursor: default;
@@ -205,6 +210,7 @@
         box-shadow: 4px 4px grey;
         width: 100%;
         font-size: 40%;
+        background-color: white;
     }
     .logo-a:hover {
         color: white;
@@ -212,5 +218,11 @@
     }
     .logo-a2 {
         font-size: 20px;
+        color: white;
+    }
+    .logoimg {
+        transform: rotate(90deg);
+        z-index: 0;
+        image-orientation: 0;
     }
 </style>
