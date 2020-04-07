@@ -3,7 +3,8 @@
     <head>
         <title>piccolowen - home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="src/icon.png">
+        <link rel="icon" href="src/pageicon.png">
+        <link rel="stylesheet" href="index.css">
     </head>
     <body>
         <div id="alerts">
@@ -46,7 +47,7 @@
             </h1>
         </div>
         <hr class="content-break">
-        <!--<div class="slideshow">
+        <div class="slideshow">
             <div class="slide fade">
                 <div class="slidenum">1 / 2</div>
                 <img src="src/logobg2.png" class="slideimg">
@@ -58,9 +59,6 @@
                 <img src="src/logobg2.png" class="slideimg">
                 <div class="slidecaption">yea we got a slideshow here</div>
             </div>
-
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
             <div style="text-align:center">
                 <span class="dot" onclick="currentSlide(1)"></span>
@@ -80,10 +78,11 @@
                         slideIndex++;
                         if (slideIndex > slides.length) { slideIndex = 1 }
                         slides[slideIndex - 1].style.display = "block";
-                        setTimeout(showSlides, 5000); // Change image every 2 seconds
+                        setTimeout(showSlides, 5000);
                     }
             </script>
-        </div>-->
+        </div>
+        <hr>
         <div class="main-content">
             <div class="content-main-focus">
                 <div class="content-main-focus-pagedev">
@@ -141,220 +140,12 @@
                 <p class="lastinfo"><code>piccolowen.github.io</code> started March 16, 2020</p>
             </div>
         </div>
+        <div class="emergencycss">
+            <style>
+                .html {
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+            </style>
+        </div>
     </body>
 </html>
-<style>
-    html {
-        font-family: Arial, Helvetica, sans-serif;
-        text-decoration: none;
-        padding: 0px;
-        width: 100%;
-        overflow:scroll;
-        overflow-x: hidden;
-    }
-    .navbar {
-        display: block;
-        text-align: center;
-        border: black;
-        border-radius: 10px;
-        border-style: solid;
-    }
-    .navbar-content {
-        font-size: 60px;
-    }
-    .navbar-content:hover {
-        cursor: default;
-    }
-    .navbar-links {
-        padding: 0px;
-    }
-    .navbar-link {
-        text-decoration: none;
-        color: black;
-        font-size: 50px;
-        border: black;
-        border-radius: 5px;
-        border-style: solid;
-        padding: 2px;
-        box-shadow: 4px 4px grey;
-        transition: all 300ms;
-    }
-    .navbar-link:hover {
-        background-color: blue;
-        color: white;
-        font-size: 60px;
-    }
-    .navbar-link:active {
-        color: black;
-    }
-    .main-content {
-        text-align: center;
-        border: black;
-        border-radius: 10px;
-        border-style: solid;
-        transition: 300ms;
-    }
-    .main-content:hover {
-        background-color: grey;
-        color: white;
-    }
-    .content-break {
-        text-align: center;
-    }
-    a {
-        text-decoration: none;
-        color: blue;
-        transition: 300ms;
-    }
-    a:hover {
-        color: red;
-    }
-    table, th, td {
-        border: black;
-        border-style: solid;
-        border-width: 1px;
-        border-collapse: collapse;
-    }
-    table {
-        width: 100%;
-    }
-    th, td {
-        padding: 5px;
-    }
-    th {
-        background-color: grey;
-    }
-    th:hover {
-        cursor: default;
-    }
-    .alert {
-        background-color: red;
-        color: white;
-    }
-    .alert-link {
-        color: blue;
-    }
-    .logo {
-        transition: 300ms;
-        border: black;
-        border-radius: 10px;
-        border-style: solid;
-        font-size: 60px;
-        overflow: hidden;
-        background-image: url("src/logobg2.png");
-        image-orientation: 90deg;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        text-align: center;
-    }
-    .logo:hover {
-        cursor: default;
-    }
-    .logo-a {
-        font-size: 100px;
-        color: black;
-        border: black;
-        border-radius: 5px;
-        border-style: solid;
-        padding: 2px;
-        box-shadow: 4px 4px grey;
-        width: 100%;
-        font-size: 40%;
-        background-color: white;
-    }
-    .logo-a:hover {
-        color: white;
-        background-image: url("src/logobg2.png");
-        image-orientation: 90deg;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        box-shadow: none;
-    }
-    .logo-a2 {
-        font-size: 20px;
-        color: white;
-    }
-    .logoimg {
-        transform: rotate(90deg);
-        z-index: 0;
-        image-orientation: 0;
-    }
-    .slideshow {
-        position: center;
-    }
-    .slide {
-        display:none;
-        border: black;
-        border-radius: 10px;
-        border-style: solid;
-    }
-    .slideimg {
-        align-content: center;
-        width: 100%;
-    }
-    .prev, .next {
-        cursor: pointer;
-        position: absolute;
-        top: 50%;
-        width: auto;
-        margin-top: 22px;
-        padding: 5px;
-        color:  black;
-        font-weight: bold;
-        font-size: 10px;
-        transition: 300ms ease;
-        border-radius: 3px 3px 3px 3px;
-    }
-    .next {
-        right: 0;
-        border-radius: 3px 3px 3px 3px;
-        margin-right: 20px;
-    }
-    .prev {
-        margin-left: 20px;
-    }
-    .prev:hover, .next:hover {
-        background-color: rgba(0,0,0,0.8);
-        font-size: 30px;
-    }
-    .slidecaption {
-        color: #f2f2f2;
-        font-size: 15px;
-        padding: 8px 12px;
-        position: absolute;
-        bottom: 8px;
-        width: 100%;
-        text-align: center;
-    }
-    .slidenum {
-        text-align: center;
-        color: black;
-        font-size: 12px;
-        padding: 8px 12px;
-        top: 0;
-    }
-    .dot {
-        cursor: pointer;
-        height: 15px;
-        width: 15px;
-        margin: 0 2px;
-        background-color: #bbb;
-        border-radius: 50%;
-        display: inline-block;
-        transition: background-color 0.6s ease;
-    }
-    .fade {
-        -webkit-animation-name: fade;
-        -webkit-animation-duration: 1.5s;
-        animation-name: fade;
-        animation-duration: 1.5s;
-    }
-    @-webkit-keyframes fade {
-        from {opacity: 0.9}
-        to {opacity: 1}
-    }
-    @keyframes fade {
-        from {opacity: 0.9}
-        to {opacity: 1}
-    }
-</style>

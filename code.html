@@ -2,11 +2,18 @@
 <html>
     <head>
         <title>code - piccolowen</title>
+        <link rel="icon" href="src/pageicon.png">
     </head>
     <body>
         <div class="navbarsys">
             <p id="navbar" style="font-family: Arial, Helvetica, sans-serif;color:red;">NAVBAR ERROR: PLEASE ENABLE JAVASCRIPT
             </p>
+            <p>ignore this message, we're too lazy to remove it</p>
+        </div>
+        <div class="pageunstable">
+            <h1>whoa!</h1>
+            <p>watch what you're doing here, because this page is unstable. it's under heavy testing and development!</p>
+            <p>want to help out? don't hesitate! you can always contribute something. make sure to check out the <a class="link" href="https://github.com/Piccolowen/piccolowen.github.io">repository</a></p>
         </div>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <div class="code">
@@ -23,10 +30,12 @@
         <hr>
         <div class="github-repositories">
             <div class="api-results" id="divResults">
-            <p id="repo-api-result"></p>
+            <p id="repo-api-result">loading...</p>
+            <p id="ytapi">loading...</p>
 
             </div>
 
+            <script src="https://apis.google.com/js/api.js"></script>
             <script>
                 window.onload = getapitest()
                 async function getapitest() {
@@ -170,5 +179,15 @@
     }
     .repotitle {
         font-size: 50px;
+    }
+    .pageunstable {
+        text-align: center;
+        border: black;
+        border-radius: 10px;
+        border-style: solid;
+        background-color: red;
+    }
+    .link:hover {
+        color: white;
     }
 </style>
