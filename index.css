@@ -24,6 +24,7 @@ html {
     }
     .navbar-link {
         text-decoration: none;
+        position: sticky;
         color: black;
         font-size: 50px;
         border: black;
