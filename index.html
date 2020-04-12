@@ -14,7 +14,18 @@
 
             gtag('config', 'UA-163374942-1');
         </script>
-
+        <script>
+            console.log('debug active')
+            window.onload = status()
+            function status() {
+                console.log('piccolowen.github.io loading!')
+            }
+            window.onunload = statusun()
+            function statusun() {
+                console.log('piccolowen.github.io unloading...')
+            }
+            document.onmouseover = console.log('mouse active')
+        </script>
     </head>
     <body>
         <div id="alerts">
@@ -26,12 +37,23 @@
                 if (typeof (Storage) !== "undefined") {
                     console.log('storage ok');
                 } else {
-                    document.getElementById('alerts').innerHTML = '<h1 class="alert">Web storage unavailable! <a class="alert-link">Learn more.</a></h1>';
+                    //document.getElementById('alerts').innerHTML = '<h1 class="alert">Web storage unavailable! <a class="alert-link">Learn more.</a></h1>';
+                    console.error('web storage undefined')
                 }
                 if (typeof (Worker) !== "undefined") {
                     console.log('worker ok');
                 } else {
-                    document.getElementById('alerts').innerHTML = '<h1 clas="alert">Web worker unavailable! <a class="alert-link">Learn more.</a></h1>';
+                    //document.getElementById('alerts').innerHTML = '<h1 clas="alert">Web worker unavailable! <a class="alert-link">Learn more.</a></h1>';
+                    console.error('web worker undefined')
+                }
+            </script>
+        </div>
+        <div class="popup" id="popup" display="none">
+            <h1 style="position: fixed;background-color: white;border: black;border-radius: 10px;border-style: solid;text-align: center;margin: 20px;">we use cookies. just letting you know. <a onclick="closePopUp()" style="cursor: pointer;">good to know</a></h1>
+            <script>
+                window.onload = document.getElementById('popup').style.display = "block"
+                function closePopUp() {
+                    document.getElementsByClassName('popup')[0].style.display = "none"
                 }
             </script>
         </div>

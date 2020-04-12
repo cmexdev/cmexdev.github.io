@@ -36,7 +36,7 @@
             //API++ by Piccolowen
             window.onload = apifunc();
             async function apifunc() {
-                const url = 'https://api.github.com/repos/octocat/Hello-World/releases';
+                const url = 'https://discordapp.com/api/guilds/664926681483444265/widget.json';
                 const response = await fetch(url);
                 const result = await response.json();
                 const apiresult = document.getElementById('repo');
@@ -44,13 +44,6 @@
                 console.log('api++ system by Piccolowen https://github.com/Piccolowen')
                 console.log('api++ result:');
                 console.log(result);
-                console.log('name result: ' + result.body)
-                const title = document.createElement('a')
-                title.href = result.html_url
-                title.target = '_blank'
-                title.className = 'repo-title'
-                title.textContent = result.body
-                apiresult.appendChild(title)
             }
 
     </script>
