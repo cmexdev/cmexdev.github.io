@@ -1,6 +1,8 @@
 html {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: lightblue;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: lighter;
+    background-color: black;
+    color: white;
 }
 a {
     color: blue;
@@ -11,12 +13,12 @@ a:hover {
 }
 .nav-wrapper {
     font-size: 50px;
-    border: black;
+    border: blue;
     border-radius: 5px;
     border-style: solid;
     transition: 300ms;
     text-align: center;
-    background-color: blueviolet;
+    background-color: gold;
 }
 .nav {
     text-align: center;
@@ -24,14 +26,14 @@ a:hover {
     font-weight: lighter;
 }
 .nav-link {
-    color: white;
+    color: black;
     transition: 300ms all;
     padding: 5px;
     text-align: center;
     text-decoration: none;
 }
 .nav-link:hover {
-    color: white;
+    color: darkblue;
     font-weight: bolder;
     cursor: pointer;
 }
@@ -41,13 +43,20 @@ a:hover {
 .repo-title {
     font-size: 75px;
     text-decoration: none;
+    text-align: center;
+    display: block;
 }
 .repo-fullname {
     font-size: 25px;
+    text-align: center;
 }
 .repo-desc {
     font-size: 50px;
-    background-color: grey;
+    border: white;
+    border-radius: 10px;
+    border-style: solid;
+    text-align: center;
+    font-family: Segoe UI,SegoeUI,"Helvetica Neue",Helvetica,Arial,sans-serif;;
 }
 table {
     width: 100%;
@@ -73,15 +82,17 @@ td {
 .dropdown-content-docs {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
+  background-color: gold;
   min-width: 25px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   padding: 12px 16px;
   z-index: 1;
   font-size: 25px;
+  color: black;
 }
 
 .dropdown-docs:hover .dropdown-content-docs {
   display: block;
   transition: 300ms;
+  color: darkblue;
 }
