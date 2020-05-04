@@ -5,89 +5,165 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        <table id="test"><tr>
+            <th>This system is under heavy development, and is liable to issues.</th>
+        </tr></table>
+
         <h1>The forecast</h1>
         <h3>Powered by <a href="https://api.weather.gov">api.weather.gov</a></h3>
-        <p>I was bored, so I created this. It is a simple HTML/JS API request system. The <a href="#code">code</a> is located at the bottom of this page. <b>NOTE: THIS DOES NOT WORK WELL ON MOBILE</b></p>
-        <h2>Forecast</h2>
+        <p>I was bored, so I created this. It is a simple HTML/JS API request system. <b>NOTE: THIS DOES NOT WORK WELL ON MOBILE</b></p>
+
+        <span id="error"></span>
+        <h2 id="hourly">Hourly forecast</h2>
+        <table id="forecast-hourly"></table>
+
+        <h2 id="daily">Daily forecast</h2>
         <table id="forecast"></table>
-        <h2 id="code">Source code</h2>
-        <embed src="weather.txt" width="100%" height="2350">
-        <span id="footer"></span>
+
+        <span id="footer">
+            Created by Piccolowen on 4/29/2020 and updated on 5/3/2020
+        </span>
+
         <script>
-            window.onload = async function status() {
+            var status = ''
+            var locLat = ''
+            var locLon = ''
+            var urlDaily = ''
+            var urlDailyForecast = ''
+            var urlHourlyForecast = ''
+            var response
+            var result
+            var arrLen
+            var arrNum
+            var forecastDaily = document.getElementById('forecast')
+            var forecastHourly = document.getElementById('forecast-hourly')
+            var err = document.getElementById('error')
+            var errMsg = ''
+            var hours = new Date()
+            var hour = hours.getHours()
+            var hourOut
+            navigator.geolocation.getCurrentPosition(locSys, locError)
+            function locSys(position) {
+                locLat = position.coords.latitude
+                locLon = position.coords.longitude
+                return getStatus()
+            }
+            async function getStatus() {
                 var url = 'https://api.weather.gov'
                 var response = await fetch(url)
                 var result = await response.json()
                 if (result.status == 'OK') {
-                    return request()
+                    console.log('API STATUS: ' + result.status)
+                    return requestDaily()
                 }
                 else {
-                    var msg = document.getElementById('forecast')
-                    var state = document.createElement('a')
-                    state.textContent = 'Weather API down. (Status: "' + result.status + '")'
-                    msg.append(state)
+                    console.error(result.status)
+                    var statusMsg = document.getElementById('error')
+                    var msg = document.createElement('span')
+                    msg.textContent = 'Weather API down. (Status: "' + result.status + '")'
+                    statusMsg.append(msg)
                 }
             }
-            function request() {
-                var url = ''
-                var forecastUrl = ''
-                navigator.geolocation.getCurrentPosition(location, showError)
-                var dataOut = document.getElementById('forecast')
-                function location(position) {
-                    url = 'https://api.weather.gov/points/' + position.coords.latitude + ',' + position.coords.longitude
-                    return forecast()
+            async function requestDaily() {
+                urlDaily = 'https://api.weather.gov/points/' + locLat + ',' + locLon
+                response = await fetch(urlDaily)
+                result = await response.json()
+                urlDailyForecast = result.properties.forecast
+                return dailyData()
+            }
+            async function dailyData() {
+                response = await fetch(urlDailyForecast)
+                result = await response.json()
+                arrLen = Object.keys(result.properties.periods).length
+                arrNum = 0
+                while (arrNum < arrLen) {
+                    var iconDaily = document.createElement('img')
+                    iconDaily.src = result.properties.periods[arrNum].icon
+                    iconDaily.className = 'icon'
+                    forecastDaily.append(iconDaily)
+
+                    var nameDaily = document.createElement('div')
+                    nameDaily.textContent = result.properties.periods[arrNum].name
+                    nameDaily.className = 'name'
+                    forecastDaily.append(nameDaily)
+
+                    var tempDaily = document.createElement('div')
+                    tempDaily.textContent = result.properties.periods[arrNum].temperature
+                    tempDaily.className = 'temp'
+                    forecastDaily.append(tempDaily)
+
+                    var descDaily = document.createElement('div')
+                    descDaily.textContent = result.properties.periods[arrNum].detailedForecast
+                    descDaily.className = 'desc'
+                    forecastDaily.append(descDaily)
+
+                    arrNum++
                 }
-                async function forecast() {
-                    var response = await fetch(url)
-                    var result = await response.json()
-                    forecastUrl = result.properties.forecast
-                    return data()
-                }
-                async function data() {
-                    var response = await fetch(forecastUrl)
-                    var result = await response.json()
-                    var dataLen = Object.keys(result.properties.periods).length
-                    var arrnum = 0
-                    while (arrnum < dataLen) {
-                        var icon = document.createElement('img')
-                        icon.src = result.properties.periods[arrnum].icon
-                        icon.className = 'icon'
-                        dataOut.append(icon)
+                return requestHourly()
+            }
+            async function requestHourly() {
+                response = await fetch(urlDaily)
+                result = await response.json()
+                urlHourlyForecast = result.properties.forecastHourly
+                return dataHourly()
+            }
+            async function dataHourly() {
+                response = await fetch(urlHourlyForecast)
+                result = await response.json()
+                arrLen = Object.keys(result.properties.periods).length
+                arrNum = 0
+                while (arrNum < arrLen) {
+                    var isDay = result.properties.periods[arrNum].isDaytime
+                    var iconHourly = document.createElement('img')
+                    iconHourly.src = result.properties.periods[arrNum].icon
+                    iconHourly.className = 'icon'
+                    forecastHourly.append(iconHourly)
 
-                        var name = document.createElement('a')
-                        name.textContent = result.properties.periods[arrnum].name
-                        name.className = 'name'
-                        dataOut.append(name)
+                    var starttimeRaw = result.properties.periods[arrNum].startTime
+                    var starttimeT = starttimeRaw.split('T')
+                    var hourtime = starttimeT[1].split('-', 1)
 
-                        var temp = document.createElement('a')
-                        temp.textContent = result.properties.periods[arrnum].temperature
-                        temp.className = 'temp'
-                        dataOut.append(temp)
-
-                        var desc = document.createElement('a')
-                        desc.textContent = result.properties.periods[arrnum].detailedForecast
-                        desc.className = 'desc'
-                        dataOut.append(desc)
-
-                        var brk = document.createElement('hr')
-                        brk.className = 'brk'
-                        dataOut.append(brk)
-
-                        arrnum++
+                    var hour = hourtime[0].split(':', 1)
+                    var hourTw = hour[0] - 12
+                    if (hour[0] > 12) {
+                        hourOut = hourTw + ' PM'
                     }
-                    var footerEl = document.getElementById('footer')
-                    var footer = document.createElement('p')
-                    footer.textContent = 'Forecast system. Created by Piccolowen on 4/29/2020'
-                    footerEl.appendChild(footer)
+                    else if (hour[0] == 12) {
+                        hourOut = '12 PM'
+                    }
+                    else if (hour[0] == 00) {
+                        hourOut = '12 AM'
+                    }
+                    else if (hour[0] == 1) {
+                        hourOut = hour[0] + ' AM'
+                    }
+                    else {
+                        hourOut = hour[0] + ' AM'
+                    }
+
+                    var hourout = document.createElement('div')
+                    hourout.textContent = hourOut
+                    hourout.className = 'name'
+                    forecastHourly.append(hourout)
+
+                    var hourTemp = document.createElement('div')
+                    hourTemp.textContent = result.properties.periods[arrNum].temperature
+                    hourTemp.className = 'temp'
+                    forecastHourly.append(hourTemp)
+
+                    var shortForecast = document.createElement('div')
+                    shortForecast.textContent = result.properties.periods[arrNum].shortForecast
+                    shortForecast.className = 'desc'
+                    forecastHourly.append(shortForecast)
+
+                    arrNum++
                 }
             }
-            function showError(error) {
-                var err = document.getElementById('forecast')
-                var errmsg = ''
+            function locError(error) {
                 switch (error.code) {
                     case error.PERMISSION_DENIED:
-                        errmsg = 'Permission denied'
-                        err.append(errmsg)
+                        errMsg = 'PERMISSION_DENIED'
+                        err.append(errMsg)
                         break;
                     case error.POSITION_UNAVAILABLE:
                         errmsg = 'Location unavailable'
@@ -115,6 +191,7 @@
             table {
                 border: black;
                 border-style: solid;
+                width: 100%;
             }
             .name, .temp, .desc {
                 padding: 5px;
@@ -122,9 +199,6 @@
                 border: black;
                 border-width: 1px;
                 border-style: solid;
-            }
-            .desc {
-                line-height: 75px;
             }
             .icon {
                 padding: 10px;
@@ -147,6 +221,15 @@
             embed {
                 border: black;
                 border-style: solid;
+            }
+            a {
+                text-decoration: none;
+                color: blue;
+                transition: 300ms;
+            }
+            #test {
+                color: white;
+                background-color: red;
             }
         </style>
     </body>
