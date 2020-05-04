@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html id="#html">
     <head>
-        <title>Forecast - Weather API system</title>
+        <title id="top">Forecast - Weather API system</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -13,12 +13,24 @@
         <h3>Powered by <a href="https://api.weather.gov">api.weather.gov</a></h3>
         <p>I was bored, so I created this. It is a simple HTML/JS API request system. <b>NOTE: THIS DOES NOT WORK WELL ON MOBILE</b></p>
 
+        <ul>
+            <li><a href="#current-forecast">Current stats</a></li>
+            <li><a href="#hourly">Hourly forecast</a></li>
+            <li><a href="#daily">Daily forecast</a></li>
+        </ul>
+
         <span id="error"></span>
+
+        <h2 id="current-forecast">Current stats</h2>
+        <table id="current"></table>
+
         <h2 id="hourly">Hourly forecast</h2>
         <table id="forecast-hourly"></table>
 
         <h2 id="daily">Daily forecast</h2>
         <table id="forecast"></table>
+
+        <a href="#test">Go back to top</a>
 
         <span id="footer">
             Created by Piccolowen on 4/29/2020 and updated on 5/3/2020
@@ -39,9 +51,14 @@
             var forecastHourly = document.getElementById('forecast-hourly')
             var err = document.getElementById('error')
             var errMsg = ''
-            var hours = new Date()
-            var hour = hours.getHours()
+            var hoursUser= new Date()
+            var hourUser = hoursUser.getHours()
+            var dateUser = new Date()
+            var dateUserDay = dateUser.getDate()
+            console.log(dateUserDay)
+            console.log(hourUser)
             var hourOut
+            var currentArrNum
             navigator.geolocation.getCurrentPosition(locSys, locError)
             function locSys(position) {
                 locLat = position.coords.latitude
@@ -155,6 +172,51 @@
                     shortForecast.textContent = result.properties.periods[arrNum].shortForecast
                     shortForecast.className = 'desc'
                     forecastHourly.append(shortForecast)
+
+                    arrNum++
+                }
+                return current()
+            }
+            async function current() {
+                response = await fetch(urlHourlyForecast)
+                result = await response.json()
+                arrLen = Object.keys(result.properties.periods).length
+                arrNum = 0
+                while (arrNum < arrLen) {
+                    var currentTimeResult = result.properties.periods[arrNum].startTime.split('T', 1)
+                    var currenttime = currentTimeResult[0].split(':', 1)
+                    var currenttimeout = currenttime[0].split('-', 3)
+                    if (currenttimeout[2] == dateUserDay) {
+                        var userTime = result.properties.periods[arrNum].startTime.split('T', 2)
+                        var usertime = userTime[1].split(':', 1)
+                        if (hourUser == usertime[0]) {
+                            console.log(arrNum)
+                            currentArrNum = arrNum
+
+                            var currentdata = document.getElementById('current')
+
+                            var currenticon = document.createElement('img')
+                            currenticon.src = result.properties.periods[currentArrNum].icon
+                            currenticon.className = 'icon'
+                            currentdata.append(currenticon)
+
+                            var currentTimeofTemp = document.createElement('div')
+                            currentTimeofTemp.textContent = hourUser
+                            currentTimeofTemp.className = 'name'
+                            currentdata.append(currentTimeofTemp)
+
+                            var currentTemp = document.createElement('div')
+                            currentTemp.textContent = result.properties.periods[currentArrNum].temperature
+                            currentTemp.className = 'temp'
+
+                            currentdata.append(currentTemp)
+
+                            var currentdesc = document.createElement('div')
+                            currentdesc.textContent = result.properties.periods[currentArrNum].shortForecast
+                            currentdesc.className = 'desc'
+                            currentdata.append(currentdesc)
+                        }
+                    }
 
                     arrNum++
                 }
