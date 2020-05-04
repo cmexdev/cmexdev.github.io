@@ -3,18 +3,22 @@
     <head>
         <title id="top">Forecast - Weather API system</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <div id="icon">
+
+        </div>
     </head>
     <body>
-        <table id="test"><tr>
+        <table id="top"><tr>
             <th>This system is under heavy development, and is liable to issues.</th>
         </tr></table>
 
         <h1>The forecast</h1>
         <h3>Powered by <a href="https://api.weather.gov">api.weather.gov</a></h3>
-        <p>I was bored, so I created this. It is a simple HTML/JS API request system. <b>NOTE: THIS DOES NOT WORK WELL ON MOBILE</b></p>
+        <p>I was bored, so I created this. It is a simple HTML/JS API request system. <b>NOTE: THIS DOES NOT WORK WELL ON MOBILE</b>. I am working very hard on this project, the main system will eventually go into a weather app I am creating. Alerts do not require location.</p>
 
         <ul>
             <li><a href="#current-forecast">Current stats</a></li>
+            <li><a href="#alerts">Alerts</a></li>
             <li><a href="#hourly">Hourly forecast</a></li>
             <li><a href="#daily">Daily forecast</a></li>
         </ul>
@@ -24,16 +28,22 @@
         <h2 id="current-forecast">Current stats</h2>
         <table id="current"></table>
 
+        <h2 id="alerts">Alerts</h2>
+        <p>Enter state</p>
+        <input id="statein" type="text" placeholder="ex: OH"> <button onclick="getActiveAlerts()">Go</button>
+        <hr />
+        <table id="alert"></table>
+
         <h2 id="hourly">Hourly forecast</h2>
         <table id="forecast-hourly"></table>
 
         <h2 id="daily">Daily forecast</h2>
         <table id="forecast"></table>
 
-        <a href="#test">Go back to top</a>
+        <a href="#top">Go back to top</a>
 
         <span id="footer">
-            Created by Piccolowen on 4/29/2020 and updated on 5/3/2020
+            Created by Piccolowen on 4/29/2020 and updated on 5/4/2020
         </span>
 
         <script>
@@ -215,6 +225,12 @@
                             currentdesc.textContent = result.properties.periods[currentArrNum].shortForecast
                             currentdesc.className = 'desc'
                             currentdata.append(currentdesc)
+
+                            var pageIcon = document.getElementById('icon')
+                            var ico = document.createElement('link')
+                            ico.href = result.properties.periods[currentArrNum].icon
+                            ico.rel = 'icon'
+                            pageIcon.append(ico)
                         }
                     }
 
@@ -242,6 +258,54 @@
                 }
             }
         </script>
+        <script>
+            //https://api.weather.gov/alerts/active?area={state}
+            async function getActiveAlerts() {
+                var stateUser = document.getElementById('statein').value
+                var alertUrl = 'https://api.weather.gov/alerts/active?area=' + stateUser
+                var alertName = document.createElement('div')
+                var alertsOut = document.getElementById('alert')
+                alertsOut.textContent = ''
+                var arrNum = 0
+                response = await fetch(alertUrl)
+                result = await response.json()
+                var arrLen = Object.keys(result.features).length
+                if (result.features != '') {
+                    while (arrNum < arrLen) {
+                        var alertName = document.createElement('div')
+                        alertName.textContent = result.features[arrNum].properties.headline
+                        alertName.className = 'name'
+                        alertsOut.append(alertName)
+
+                        var alertSev = document.createElement('div')
+                        alertSev.textContent = 'Severity: ' + result.features[arrNum].properties.severity
+                        alertSev.className = 'sev'
+                        alertsOut.append(alertSev)
+
+                        var alertLike = document.createElement('div')
+                        alertLike.textContent = 'Certainty: ' + result.features[arrNum].properties.certainty
+                        alertLike.className = 'like'
+                        alertsOut.append(alertLike)
+
+                        var alertDesc = document.createElement('div')
+                        alertDesc.textContent = result.features[arrNum].properties.description
+                        alertDesc.className = 'desc'
+                        alertsOut.append(alertDesc)
+
+                        var hr = document.createElement('hr')
+                        alertsOut.append(hr)
+
+                        arrNum++
+                    }
+                }
+                else {
+                    var noAlert = document.createElement('div')
+                    noAlert.textContent = 'No alerts for provided state!'
+                    noAlert.className = 'noal'
+                    alertsOut.append(noAlert)
+                }
+            }
+        </script>
         <style>
             html {
                 margin: 0;
@@ -255,7 +319,7 @@
                 border-style: solid;
                 width: 100%;
             }
-            .name, .temp, .desc {
+            .name, .temp, .desc, .sev, .like, .noal {
                 padding: 5px;
                 margin: 10px;
                 border: black;
@@ -289,9 +353,21 @@
                 color: blue;
                 transition: 300ms;
             }
-            #test {
+            #top {
                 color: white;
                 background-color: red;
+            }
+            .sev:hover {
+                color: white;
+                background-color: crimson;
+            }
+            .like:hover {
+                color: white;
+                background-color: darkgoldenrod;
+            }
+            .noal:hover {
+                color: white;
+                background-color: darkorchid;
             }
         </style>
     </body>
