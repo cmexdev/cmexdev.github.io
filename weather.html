@@ -6,6 +6,8 @@
         <div id="icon">
 
         </div>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
     <body>
         <table id="top"><tr>
@@ -16,6 +18,7 @@
         <h3>Powered by <a href="https://api.weather.gov">api.weather.gov</a></h3>
         <p>I was bored, so I created this. It is a simple HTML/JS API request system. <b>NOTE: THIS DOES NOT WORK WELL ON MOBILE</b>. I am working very hard on this project, the main system will eventually go into a weather app I am creating. Alerts do not require location.</p>
 
+        <h3>Page contents</h3>
         <ul>
             <li><a href="#current-forecast">Current stats</a></li>
             <li><a href="#alerts">Alerts</a></li>
@@ -23,27 +26,31 @@
             <li><a href="#daily">Daily forecast</a></li>
         </ul>
 
-        <span id="error"></span>
+        <table id="error"></table>
 
         <h2 id="current-forecast">Current stats</h2>
+        <h5>What's it like outside right now</h5>
         <table id="current"></table>
 
         <h2 id="alerts">Alerts</h2>
+        <h5>Get alerts for any state</h5>
         <p>Enter state</p>
         <input id="statein" type="text" placeholder="ex: OH"> <button onclick="getActiveAlerts()">Go</button>
         <hr />
         <table id="alert"></table>
 
         <h2 id="hourly">Hourly forecast</h2>
+        <h5>The hourly forecast</h5>
         <table id="forecast-hourly"></table>
 
         <h2 id="daily">Daily forecast</h2>
+        <h5>The daily forecast</h5>
         <table id="forecast"></table>
 
         <a href="#top">Go back to top</a>
 
         <span id="footer">
-            Created by Piccolowen on 4/29/2020 and updated on 5/4/2020
+            Created by <a href="index.html">Piccolowen</a> on 4/29/2020 and updated on 5/4/2020
         </span>
 
         <script>
@@ -211,12 +218,19 @@
                             currentdata.append(currenticon)
 
                             var currentTimeofTemp = document.createElement('div')
-                            currentTimeofTemp.textContent = hourUser
+                            var currentHourOfUser
+                            if (hourUser >= 12) {
+                                currentHourOfUser = (hourUser - 12) + ' PM'
+                            }
+                            else {
+                                currentHourOfUser = hourUser + ' AM'
+                            }
+                            currentTimeofTemp.textContent = currentHourOfUser
                             currentTimeofTemp.className = 'name'
                             currentdata.append(currentTimeofTemp)
 
                             var currentTemp = document.createElement('div')
-                            currentTemp.textContent = result.properties.periods[currentArrNum].temperature
+                            currentTemp.textContent = result.properties.periods[currentArrNum].temperature + '°'
                             currentTemp.className = 'temp'
 
                             currentdata.append(currentTemp)
@@ -240,19 +254,19 @@
             function locError(error) {
                 switch (error.code) {
                     case error.PERMISSION_DENIED:
-                        errMsg = 'PERMISSION_DENIED'
+                        errMsg = 'ERROR: PERMISSION WAS DENIED BY USER'
                         err.append(errMsg)
                         break;
                     case error.POSITION_UNAVAILABLE:
-                        errmsg = 'Location unavailable'
+                        errmsg = 'ERROR: LOCATION UNAVAILABLE'
                         err.append(errmsg)
                         break;
                     case error.TIMEOUT:
-                        errmsg = 'Location timeout'
+                        errmsg = 'ERROR: LOCATION TIMEOUT'
                         err.append(errmsg)
                         break;
                     case error.UNKNOWN_ERROR:
-                        errmsg = 'An unknown error occurred'
+                        errmsg = 'ERROR: UNKNOWN ERROR'
                         err.append(errmsg)
                         break;
                 }
@@ -292,6 +306,16 @@
                         alertDesc.className = 'desc'
                         alertsOut.append(alertDesc)
 
+                        var alertInstruc = document.createElement('div')
+                        if (result.features[arrNum].properties.instruction == 'null') {
+                            alertInstruc.textContent = 'No instructions provided'
+                        }
+                        else {
+                            alertInstruc.textContent = 'Instructions: ' + result.features[arrNum].properties.instruction
+                        }
+                        alertInstruc.className = 'instruc'
+                        alertsOut.append(alertInstruc)
+
                         var hr = document.createElement('hr')
                         alertsOut.append(hr)
 
@@ -309,6 +333,10 @@
         <style>
             html {
                 margin: 0;
+                transition: 300ms;
+            }
+            *{
+                transition: 150ms;
             }
             body {
                 margin: 5px;
@@ -319,7 +347,7 @@
                 border-style: solid;
                 width: 100%;
             }
-            .name, .temp, .desc, .sev, .like, .noal {
+            .name, .temp, .desc, .sev, .like, .noal, .instruc {
                 padding: 5px;
                 margin: 10px;
                 border: black;
@@ -368,6 +396,15 @@
             .noal:hover {
                 color: white;
                 background-color: darkorchid;
+            }
+            .instruc:hover {
+                color: white;
+                background-color: blueviolet;
+            }
+            #error {
+                color: white;
+                background-color: red;
+                font-weight: bold;
             }
         </style>
     </body>
