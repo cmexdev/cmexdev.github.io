@@ -18,7 +18,7 @@
         <h3>Powered by <a href="https://api.weather.gov">api.weather.gov</a></h3>
         <p>I was bored, so I created this. It is a simple HTML/JS API request system. <b>NOTE: THIS DOES NOT WORK WELL ON MOBILE</b>. I am working very hard on this project, the main system will eventually go into a weather app I am creating. Alerts do not require location.</p>
 
-        <a id="devmode" onclick="showDev()">Dev mode</a>
+        <a id="devmode" onclick="showDev()">Enable dev mode</a>
         <script>
             function showDev() {
                 var currentUrl = document.getElementById('current-forecast-devurl')
@@ -431,6 +431,9 @@
                 color: white;
                 background-color: red;
                 font-weight: bold;
+            }
+            #devmode:hover {
+                cursor: pointer;
             }
         </style>
     </body>
