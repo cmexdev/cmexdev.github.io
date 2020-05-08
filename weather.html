@@ -18,6 +18,19 @@
         <h3>Powered by <a href="https://api.weather.gov">api.weather.gov</a></h3>
         <p>I was bored, so I created this. It is a simple HTML/JS API request system. <b>NOTE: THIS DOES NOT WORK WELL ON MOBILE</b>. I am working very hard on this project, the main system will eventually go into a weather app I am creating. Alerts do not require location.</p>
 
+        <a id="devmode" onclick="showDev()">Dev mode</a>
+        <script>
+            function showDev() {
+                var currentUrl = document.getElementById('current-forecast-devurl')
+                currentUrl.textContent = 'FETCH URL: ' + urlHourlyForecast
+                var hourlyUrlEl = document.getElementById('hourly-devurl')
+                hourlyUrlEl.textContent = 'FETCH URL: ' + urlHourlyForecast
+                var dailyUrlEl = document.getElementById('daily-devurl')
+                dailyUrlEl.textContent = 'FETCH URL: ' + urlDailyForecast
+            }
+        </script>
+
+
         <h3>Page contents</h3>
         <ul>
             <li><a href="#current-forecast">Current stats</a></li>
@@ -29,10 +42,12 @@
         <table id="error"></table>
 
         <h2 id="current-forecast">Current stats</h2>
+        <code id="current-forecast-devurl" class="dev"></code>
         <h5>What's it like outside right now</h5>
         <table id="current"></table>
 
         <h2 id="alerts">Alerts</h2>
+        <code id="alert-devurl"></code>
         <h5>Get alerts for any state</h5>
         <p>Enter state</p>
         <input id="statein" type="text" placeholder="ex: OH"> <button onclick="getActiveAlerts()">Go</button>
@@ -40,10 +55,12 @@
         <table id="alert"></table>
 
         <h2 id="hourly">Hourly forecast</h2>
+        <code id="hourly-devurl"></code>
         <h5>The hourly forecast</h5>
         <table id="forecast-hourly"></table>
 
         <h2 id="daily">Daily forecast</h2>
+        <code id="daily-devurl"></code>
         <h5>The daily forecast</h5>
         <table id="forecast"></table>
 
@@ -184,6 +201,11 @@
                     hourTemp.textContent = result.properties.periods[arrNum].temperature
                     hourTemp.className = 'temp'
                     forecastHourly.append(hourTemp)
+
+                    var windState = document.createElement('div')
+                    windState.textContent = 'Wind will be around ' + result.properties.periods[arrNum].windSpeed + ' heading ' + result.properties.periods[arrNum].windDirection
+                    windState.className = 'wind'
+                    forecastHourly.append(windState)
 
                     var shortForecast = document.createElement('div')
                     shortForecast.textContent = result.properties.periods[arrNum].shortForecast
@@ -347,7 +369,7 @@
                 border-style: solid;
                 width: 100%;
             }
-            .name, .temp, .desc, .sev, .like, .noal, .instruc {
+            .name, .temp, .desc, .sev, .like, .noal, .instruc, .wind {
                 padding: 5px;
                 margin: 10px;
                 border: black;
@@ -371,6 +393,10 @@
             .desc:hover {
                 color: white;
                 background-color: orangered;
+            }
+            .wind:hover {
+                color: white;
+                background-color: fuchsia;
             }
             embed {
                 border: black;

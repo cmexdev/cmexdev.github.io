@@ -67,15 +67,20 @@
                     <a href="code.html" class="navbar-link" title="check out code i've written">code</a>
                     <a href="music.html" class="navbar-link" title="music i make and like">music</a>
                     <a href="status.html" class="navbar-link" title="check the status of the internet">status</a>
-                    <a href="404.html" class="navbar-link" title="unsorted pages">misc</a>
                     <a href="weather.html" class="navbar-link" title="Piccolowen's weather system">weather</a>
                 </div>
             </h1>
         </div>
         <hr class="content-break">
         <div class="new-plans">
+            <h3 class="new-plans-3">new project: a weather app</h3>
+            <h1 class="new-plans-title">Built in Electron.</h1>
+            <p class="new-plans-link"><a href="weather.html">Check out the BETA weather system.</a></p>
+        </div>
+        <hr class="content-break">
+        <div class="new-plans">
             <h3 class="new-plans-3">new plans with API++</h3>
-            <h1 class="new-plans-title">Building API++ with Electron</h1>
+            <h1 class="new-plans-title">Building API++ with Electron, again.</h1>
             <p class="new-plans-link">learn more about <a href="https://www.electronjs.org/"><b class="new-plans-nold">Electron</b></a>. learn more ahout <a href="code/apipp/apipp.html"><b>API++</b></a>.</p>
         </div>
         <hr>
@@ -132,6 +137,47 @@
                     <h1>YouTube</h1>
                     <iframe width="100%" height="500" src="https://www.youtube.com/embed/UqkfBnQjygM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <p>we're on youtube now! <a href="https://www.youtube.com/channel/UCqFuJipyx99VjVzub5C_niw">channel</a></p>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="main-content">
+            <div class="content-main-focus">
+                <div class="content-main-focus-discord">
+                    <img src="https://img.icons8.com/plasticine/100/000000/discord-logo.png" />
+                    <h1>join the Discord!</h1>
+                    <div class="discord-widget">
+                        <span id="discord-wid"></span>
+                        <script>
+                            window.onload = async function widget() {
+                                var response = await fetch('https://discordapp.com/api/guilds/664926681483444265/widget.json')
+                                var result = await response.json()
+                                console.log(result)
+                                var serverWidget = document.getElementById('discord-wid')
+                                var serverName = document.createElement('div')
+                                serverName.textContent = result.name
+                                serverWidget.append(serverName)
+
+                                var serverMembersLen = Object.keys(result.members).length
+                                var serverMembersArr = 0
+                                while (serverMembersArr < serverMembersLen) {
+                                    var memberImg = document.createElement('img')
+                                    memberImg.src = result.members[serverMembersArr].avatar_url
+                                    memberImg.className = 'member-img'
+                                    memberImg.align = 'left'
+                                    serverWidget.append(memberImg)
+                                    var memberName = document.createElement('span')
+                                    memberName.textContent = result.members[serverMembersArr].username
+                                    serverWidget.append(memberName)
+
+                                    var br = document.createElement('br')
+                                    serverWidget.append(br)
+                                    serverMembersArr++
+                                }
+                            }                            
+                        </script>
+                    </div>
+                    <p><a href="">the piccolowen hub</a></p>
                 </div>
             </div>
         </div>
