@@ -10,32 +10,22 @@
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
     <body>
+        <noscript>
         <table id="top"><tr>
-            <th>This system is under heavy development, and is liable to issues.</th>
+            <th>This page relies on JavaScript to function. Please consider enabling JavaScript for this page.</th>
         </tr></table>
+        </noscript>
+        <table id="error"></table>
 
-        <h1>The forecast</h1>
-        <h3>Powered by <a href="https://api.weather.gov">api.weather.gov</a></h3>
-        <p>I was bored, so I created this. It is a simple HTML/JS API request system. <b>NOTE: THIS DOES NOT WORK WELL ON MOBILE</b>. I am working very hard on this project, the main system will eventually go into a weather app I am creating. Alerts do not require location.</p>
-
-        <a id="devmode" onclick="showDev()"></a>
-        <script>
-            function showDev() {
-                var currentUrl = document.getElementById('current-forecast-devurl')
-                currentUrl.textContent = 'FETCH URL: ' + urlHourlyForecast
-                var hourlyUrlEl = document.getElementById('hourly-devurl')
-                hourlyUrlEl.textContent = 'FETCH URL: ' + urlHourlyForecast
-                var dailyUrlEl = document.getElementById('daily-devurl')
-                dailyUrlEl.textContent = 'FETCH URL: ' + urlDailyForecast
-            }
-        </script>
+        <h1 id="forecast-title">The forecast</h1>
+        <h5 id="forecast-loc"></h5>
 
 
         <h3 id="tbltitle"></h3>
         <ul id="contents">
         </ul>
 
-        <table id="error"></table>
+        <code id="mainurl"></code>
 
         <h2 id="current-forecast"></h2>
         <code id="current-forecast-devurl" class="dev"></code>
@@ -54,6 +44,7 @@
         <code id="hourly-devurl"></code>
         <h5 id="hourlydesc"></h5>
         <table id="forecast-hourly"></table>
+        <a id="showall"></a>
 
         <h2 id="daily"></h2>
         <code id="daily-devurl"></code>
@@ -65,14 +56,34 @@
         <span id="footer">
             
         </span>
+        <div>
+            View source code on <a href="https://github.com/Piccolowen/piccolowen.github.io/blob/master/weather.html">GitHub</a>.
+            Powered by <a href="https://api.weather.gov">api.weather.gov</a>
+            <p>I was bored, so I created this. It is a simple HTML/JS API request system. <b>NOTE: THIS DOES NOT WORK WELL ON
+                    MOBILE</b>. I am working very hard on this project, the main system will eventually go into a weather app I am
+                creating. Alerts do not require location.</p>
+        </div>
         <script>
             var foot = document.getElementById('footer')
             foot.textContent = 'Created by Piccolowen on 4/29/2020 and last updated on ' + document.lastModified + '. Styling by Bootstrap.'
         </script>
-        <br />
         <hr />
+        <a href="#" id="devmode" onclick="showDev()"></a>
+        <script>
+            function showDev() {
+                var currentUrl = document.getElementById('current-forecast-devurl')
+                currentUrl.textContent = 'FETCH URL: ' + urlHourlyForecast
+                var hourlyUrlEl = document.getElementById('hourly-devurl')
+                hourlyUrlEl.textContent = 'FETCH URL: ' + urlHourlyForecast
+                var dailyUrlEl = document.getElementById('daily-devurl')
+                dailyUrlEl.textContent = 'FETCH URL: ' + urlDailyForecast
+                var mainUrl = document.getElementById('mainurl')
+                mainUrl.textContent = 'MAIN FETCH URL: ' + urlDaily
+            }
+        </script>
+        <br />
 
-        <a href="#top">Go back to top</a>
+        <a href="#">Go back to top</a>
 
         <script>
             var status = ''
@@ -93,6 +104,7 @@
             var hourUser = hoursUser.getHours()
             var dateUser = new Date()
             var dateUserDay = dateUser.getDate()
+            var forecastLoc = ''
             console.log(dateUserDay)
             console.log(hourUser)
             var hourOut
@@ -161,6 +173,9 @@
                 urlDaily = 'https://api.weather.gov/points/' + locLat + ',' + locLon
                 response = await fetch(urlDaily)
                 result = await response.json()
+                forecastLoc = result.properties.relativeLocation.properties.city + ', ' + result.properties.relativeLocation.properties.state
+                var forecastLocation = document.getElementById('forecast-loc')
+                forecastLocation.textContent = forecastLoc
                 urlDailyForecast = result.properties.forecast
                 return dailyData()
             }
@@ -214,13 +229,14 @@
                 response = await fetch(urlHourlyForecast)
                 result = await response.json()
                 arrLen = Object.keys(result.properties.periods).length
+                arrMax = 25
                 arrNum = 0
 
                 var hourlyTitle = document.getElementById('hourly')
                 hourlyTitle.textContent = 'Hourly forecast'
                 var hourlyDesc = document.getElementById('hourlydesc')
                 hourlyDesc.textContent = 'The hourly forecast'
-                while (arrNum < arrLen) {
+                while (arrNum < arrMax) {
                     var isDay = result.properties.periods[arrNum].isDaytime
                     var iconHourly = document.createElement('img')
                     iconHourly.src = result.properties.periods[arrNum].icon
@@ -342,8 +358,8 @@
             function locError(error) {
                 switch (error.code) {
                     case error.PERMISSION_DENIED:
-                        errMsg = 'ERROR: PERMISSION WAS DENIED BY USER'
-                        err.append(errMsg)
+                        errMsg = 'ERROR: PERMISSION FOR GEOLOCATION WAS DENIED BY USER <a href="#" style="color: white;">ree</a>'
+                        err.innerHTML = errMsg
                         break;
                     case error.POSITION_UNAVAILABLE:
                         errmsg = 'ERROR: LOCATION UNAVAILABLE'
@@ -354,7 +370,7 @@
                         err.append(errmsg)
                         break;
                     case error.UNKNOWN_ERROR:
-                        errmsg = 'ERROR: UNKNOWN ERROR'
+                        errmsg = 'ERROR: UNKNOWN ERROR WHILE FETCHING LOCATION'
                         err.append(errmsg)
                         break;
                 }
@@ -500,6 +516,11 @@
             }
             #devmode:hover {
                 cursor: pointer;
+            }
+            code {
+                border: black;
+                border-width: 1px;
+                border-style: solid;
             }
         </style>
     </body>
