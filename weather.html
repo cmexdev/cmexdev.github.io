@@ -60,8 +60,6 @@
         <h5 id="dailydesc"></h5>
         <table id="forecast"></table>
 
-        <a href="#top">Go back to top</a>
-
         <h2 id="credits">Credits</h2>
 
         <span id="footer">
@@ -71,6 +69,10 @@
             var foot = document.getElementById('footer')
             foot.textContent = 'Created by Piccolowen on 4/29/2020 and last updated on ' + document.lastModified + '. Styling by Bootstrap.'
         </script>
+        <br />
+        <hr />
+
+        <a href="#top">Go back to top</a>
 
         <script>
             var status = ''
@@ -187,6 +189,11 @@
                     tempDaily.textContent = result.properties.periods[arrNum].temperature
                     tempDaily.className = 'temp'
                     forecastDaily.append(tempDaily)
+
+                    var windDaily = document.createElement('div')
+                    windDaily.textContent = 'Wind will be around ' + result.properties.periods[arrNum].windSpeed + ' heading ' + result.properties.periods[arrNum].windDirection
+                    windDaily.className = 'wind'
+                    forecastDaily.append(windDaily)
 
                     var descDaily = document.createElement('div')
                     descDaily.textContent = result.properties.periods[arrNum].detailedForecast
