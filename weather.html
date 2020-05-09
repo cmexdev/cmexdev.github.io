@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html id="#html">
     <head>
-        <title id="top">Forecast - Weather API system</title>
+        <title>Forecast - Weather API system</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <div id="icon">
 
@@ -18,7 +18,7 @@
         <h3>Powered by <a href="https://api.weather.gov">api.weather.gov</a></h3>
         <p>I was bored, so I created this. It is a simple HTML/JS API request system. <b>NOTE: THIS DOES NOT WORK WELL ON MOBILE</b>. I am working very hard on this project, the main system will eventually go into a weather app I am creating. Alerts do not require location.</p>
 
-        <a id="devmode" onclick="showDev()">Enable dev mode</a>
+        <a id="devmode" onclick="showDev()"></a>
         <script>
             function showDev() {
                 var currentUrl = document.getElementById('current-forecast-devurl')
@@ -31,19 +31,15 @@
         </script>
 
 
-        <h3>Page contents</h3>
-        <ul>
-            <li><a href="#current-forecast">Current stats</a></li>
-            <li><a href="#alerts">Alerts</a></li>
-            <li><a href="#hourly">Hourly forecast</a></li>
-            <li><a href="#daily">Daily forecast</a></li>
+        <h3 id="tbltitle"></h3>
+        <ul id="contents">
         </ul>
 
         <table id="error"></table>
 
-        <h2 id="current-forecast">Current stats</h2>
+        <h2 id="current-forecast"></h2>
         <code id="current-forecast-devurl" class="dev"></code>
-        <h5>What's it like outside right now</h5>
+        <h5 id="currentdesc"></h5>
         <table id="current"></table>
 
         <h2 id="alerts">Alerts</h2>
@@ -54,21 +50,27 @@
         <hr />
         <table id="alert"></table>
 
-        <h2 id="hourly">Hourly forecast</h2>
+        <h2 id="hourly"></h2>
         <code id="hourly-devurl"></code>
-        <h5>The hourly forecast</h5>
+        <h5 id="hourlydesc"></h5>
         <table id="forecast-hourly"></table>
 
-        <h2 id="daily">Daily forecast</h2>
+        <h2 id="daily"></h2>
         <code id="daily-devurl"></code>
-        <h5>The daily forecast</h5>
+        <h5 id="dailydesc"></h5>
         <table id="forecast"></table>
 
         <a href="#top">Go back to top</a>
 
+        <h2 id="credits">Credits</h2>
+
         <span id="footer">
-            Created by <a href="index.html">Piccolowen</a> on 4/29/2020 and updated on 5/4/2020
+            
         </span>
+        <script>
+            var foot = document.getElementById('footer')
+            foot.textContent = 'Created by Piccolowen on 4/29/2020 and last updated on ' + document.lastModified + '. Styling by Bootstrap.'
+        </script>
 
         <script>
             var status = ''
@@ -100,6 +102,44 @@
                 return getStatus()
             }
             async function getStatus() {
+                var devmode = document.getElementById('devmode')
+                devmode.textContent = 'Enable developer mode'
+
+                var tbl = document.getElementById('tbltitle')
+                tbl.textContent = 'Page content'
+
+                var tblOfContents = document.getElementById('contents')
+                var currentLink = document.createElement('li')
+                var currentLinkA = document.createElement('a')
+                currentLinkA.href = '#current-forecast'
+                currentLinkA.textContent = 'Current stats'
+                currentLink.appendChild(currentLinkA)
+                tblOfContents.appendChild(currentLink)
+                var alertLink = document.createElement('li')
+                var alertLinkA = document.createElement('a')
+                alertLinkA.href = '#alerts'
+                alertLinkA.textContent = 'Alerts'
+                alertLink.appendChild(alertLinkA)
+                tblOfContents.appendChild(alertLink)
+                var hourlyLink = document.createElement('li')
+                var hourlyLinkA = document.createElement('a')
+                hourlyLinkA.href = '#hourly'
+                hourlyLinkA.textContent = 'Hourly forecast'
+                hourlyLink.appendChild(hourlyLinkA)
+                tblOfContents.appendChild(hourlyLink)
+                var dailyLink = document.createElement('li')
+                var dailylLinkA = document.createElement('a')
+                dailylLinkA.href = '#daily'
+                dailylLinkA.textContent = 'Daily forecast'
+                dailyLink.appendChild(dailylLinkA)
+                tblOfContents.appendChild(dailyLink)
+                var credit = document.createElement('li')
+                var creditA = document.createElement('a')
+                creditA.href = '#credits'
+                creditA.textContent = 'Credits'
+                credit.appendChild(creditA)
+                tblOfContents.appendChild(credit)
+
                 var url = 'https://api.weather.gov'
                 var response = await fetch(url)
                 var result = await response.json()
@@ -127,6 +167,11 @@
                 result = await response.json()
                 arrLen = Object.keys(result.properties.periods).length
                 arrNum = 0
+
+                var dailyTitle = document.getElementById('daily')
+                dailyTitle.textContent = 'Daily forecast'
+                var dailyDesc = document.getElementById('dailydesc')
+                dailyDesc.textContent = 'The daily forecast'
                 while (arrNum < arrLen) {
                     var iconDaily = document.createElement('img')
                     iconDaily.src = result.properties.periods[arrNum].icon
@@ -163,6 +208,11 @@
                 result = await response.json()
                 arrLen = Object.keys(result.properties.periods).length
                 arrNum = 0
+
+                var hourlyTitle = document.getElementById('hourly')
+                hourlyTitle.textContent = 'Hourly forecast'
+                var hourlyDesc = document.getElementById('hourlydesc')
+                hourlyDesc.textContent = 'The hourly forecast'
                 while (arrNum < arrLen) {
                     var isDay = result.properties.periods[arrNum].isDaytime
                     var iconHourly = document.createElement('img')
@@ -221,6 +271,10 @@
                 result = await response.json()
                 arrLen = Object.keys(result.properties.periods).length
                 arrNum = 0
+                var currentTitle = document.getElementById('current-forecast')
+                currentTitle.textContent = 'Current stats'
+                var currentDesc = document.getElementById('currentdesc')
+                currentDesc.textContent = 'What\'s it like outside right now'
                 while (arrNum < arrLen) {
                     var currentTimeResult = result.properties.periods[arrNum].startTime.split('T', 1)
                     var currenttime = currentTimeResult[0].split(':', 1)
@@ -256,6 +310,11 @@
                             currentTemp.className = 'temp'
 
                             currentdata.append(currentTemp)
+
+                            var curwindState = document.createElement('div')
+                            curwindState.textContent = 'Wind will be around ' + result.properties.periods[arrNum].windSpeed + ' heading ' + result.properties.periods[arrNum].windDirection
+                            curwindState.className = 'wind'
+                            currentdata.append(curwindState)
 
                             var currentdesc = document.createElement('div')
                             currentdesc.textContent = result.properties.periods[currentArrNum].shortForecast
