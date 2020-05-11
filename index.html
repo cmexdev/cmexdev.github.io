@@ -161,23 +161,33 @@
                                 var serverMembersLen = Object.keys(result.members).length
                                 var serverMembersArr = 0
                                 while (serverMembersArr < serverMembersLen) {
+                                    var memList = document.createElement('ul')
+                                    memList.style = 'text-align:left;'
+                                    var memListItem = document.createElement('li')
                                     var memberImg = document.createElement('img')
                                     memberImg.src = result.members[serverMembersArr].avatar_url
                                     memberImg.className = 'member-img'
-                                    memberImg.align = 'left'
-                                    serverWidget.append(memberImg)
-                                    var memberName = document.createElement('span')
-                                    memberName.textContent = result.members[serverMembersArr].username
-                                    serverWidget.append(memberName)
+                                    memListItem.append(memberImg)
+                                    memList.append(memListItem)
+                                    serverWidget.append(memList)
 
-                                    var br = document.createElement('br')
-                                    serverWidget.append(br)
+                                    var memberName = document.createElement('span')
+                                    memberName.textContent = result.members[serverMembersArr].username + ' - ' + result.members[serverMembersArr].status
+                                    memListItem.append(memberName)
+                                    memList.append(memListItem)
+                                    serverWidget.append(memList)
+
+                                    //var br = document.createElement('br')
+                                    //serverWidget.append(br)
                                     serverMembersArr++
                                 }
+                                var invite = document.createElement('a')
+                                invite.textContent = 'the piccolowen hub'
+                                invite.href = result.instant_invite
+                                serverWidget.append(invite)
                             }                            
                         </script>
                     </div>
-                    <p><a href="">the piccolowen hub</a></p>
                 </div>
             </div>
         </div>

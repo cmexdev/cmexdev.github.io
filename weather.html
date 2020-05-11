@@ -3,6 +3,7 @@
     <head>
         <title>Forecast - Weather API system</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
         <div id="icon">
 
         </div>
@@ -15,7 +16,8 @@
             <th>This page relies on JavaScript to function. Please consider enabling JavaScript for this page.</th>
         </tr></table>
         </noscript>
-        <table id="error"></table>
+        <table id="error">
+        </table>
 
         <h1 id="forecast-title">The forecast</h1>
         <h5 id="forecast-loc"></h5>
@@ -51,6 +53,26 @@
         <h5 id="dailydesc"></h5>
         <table id="forecast"></table>
 
+        <h2 id="lastcommit">Most recent commit</h2>
+        <p id="betacommitfeature">This feature is in BETA. <a class="unstyled-a" href="#betacommitfeature" onclick="commitData()">Try it anyway</a>. Do not expect a result.</p>
+        <table id="lastcommitdata"></table>
+        <script>
+            var commitsUrl = 'https://api.github.com/repos/Piccolowen/piccolowen.github.io/commits'
+            var commitOut = document.getElementById('lastcommitdata')
+            var commitResponse = ''
+            var commitResult = ''
+            var commits
+            var currentCommitUrl
+            var fileName = 'weather.html'
+            async function commitData() {
+                commitResponse = await fetch(commitsUrl)
+                commitResult = await commitResponse.json()
+                commits = Object.keys(commitResult).length
+                console.log('RECENT COMMITS: ' + commits)
+                var commitArrNum = 0
+            }
+        </script>
+
         <h2 id="credits">Credits</h2>
 
         <span id="footer">
@@ -62,6 +84,7 @@
             <p>I was bored, so I created this. It is a simple HTML/JS API request system. <b>NOTE: THIS DOES NOT WORK WELL ON
                     MOBILE</b>. I am working very hard on this project, the main system will eventually go into a weather app I am
                 creating. Alerts do not require location.</p>
+                <p>Found and issue? Describe it in <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSflIrKpFAwLO3RRQkgUfyrztWmUdnfWQlc-MCJw1j_NH6OLFA/viewform?usp=sf_link">this Google Form</a></p>
         </div>
         <script>
             var foot = document.getElementById('footer')
@@ -110,6 +133,8 @@
             var hourOut
             var currentArrNum
             navigator.geolocation.getCurrentPosition(locSys, locError)
+            var overloaderr = 'GitHub API requests are liable to be overloaded, so some systems may not function properly.'
+            err.append(overloaderr)
             function locSys(position) {
                 locLat = position.coords.latitude
                 locLon = position.coords.longitude
@@ -153,6 +178,10 @@
                 creditA.textContent = 'Credits'
                 credit.appendChild(creditA)
                 tblOfContents.appendChild(credit)
+                var commit = document.createElement('li')
+                var commitA = document.createElement('a')
+                commitA.textContent = 'Most recent commit'
+                commitA.href = '#lastcommit'
 
                 var url = 'https://api.weather.gov'
                 var response = await fetch(url)
@@ -356,21 +385,26 @@
                 }
             }
             function locError(error) {
+                var errBr = document.createElement('br')
                 switch (error.code) {
                     case error.PERMISSION_DENIED:
-                        errMsg = 'ERROR: PERMISSION FOR GEOLOCATION WAS DENIED BY USER <a href="#" style="color: white;">ree</a>'
-                        err.innerHTML = errMsg
+                        errMsg = 'ERROR: PERMISSION FOR GEOLOCATION WAS DENIED BY USER'
+                        err.append(errBr)
+                        err.append(errMsg)
                         break;
                     case error.POSITION_UNAVAILABLE:
                         errmsg = 'ERROR: LOCATION UNAVAILABLE'
+                        err.append(errBr)
                         err.append(errmsg)
                         break;
                     case error.TIMEOUT:
                         errmsg = 'ERROR: LOCATION TIMEOUT'
+                        err.append(errBr)
                         err.append(errmsg)
                         break;
                     case error.UNKNOWN_ERROR:
                         errmsg = 'ERROR: UNKNOWN ERROR WHILE FETCHING LOCATION'
+                        err.append(errBr)
                         err.append(errmsg)
                         break;
                 }
@@ -515,6 +549,15 @@
                 font-weight: bold;
             }
             #devmode:hover {
+                cursor: pointer;
+            }
+            .unstyled-a {
+                color: rgb(0, 0, 255)
+            }
+            .unstyled-a {
+                text-decoration: none;
+                color: rgb(0, 3, 252);
+                text-decoration-color:rgb(0, 3, 252);
                 cursor: pointer;
             }
         </style>
