@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>The Piccolowen Hub</title>
+        <link href="../../src/pageicon.png" rel="icon">
+        <link href="index.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="../../src/jquery-3.5.1.js"></script>
+        <!--OPTIONAL STYLING
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        -->
+    </head>
+    <body>
+        <div id="logo">
+            <span id="logo-title">The Piccolowen Hub</span>
+            -
+            <span class="services" id="logo-link"><a title="Services" href="">Services</a></span>
+            -
+            <span id="logo-link"><a title="About" href="">About</a></span>
+            -
+            <span id="logo-link"><a title="Contact" href="">Contact</a></span>
+        </div>
+
+        <div id="welcome">
+            <span class="welcome-title">Welcome to the new Piccolowen hub!</span>
+            
+            <span class="welcome-desc">Switching to proper grammar and capatilization was hard.</span>
+        </div>
+
+        <hr>
+
+        <div id="content">
+            <noscript>
+                <div class="noscript">
+                    Don't see anything?
+                    <span class="noscript-try">Try turning on JavaScript</span>
+                    <span class="noscript-y"><code>piccolowen.github.io</code> highly recommends using JavaScript for this site and lots other. Most features will not work without JavaScript.</span>
+                </div>
+                <hr>
+            </noscript>
+            <!--CONTENT ONLY LOADED IF JAVASCRIPT IS ENABLED-->
+            <div id="news">
+                <span id="news-in"></span>
+                <script src="news.js"></script>
+            </div>
+        </div>
+
+        <div id="footer">
+            <div class="table">
+                <table>
+                    <tr>
+                        <th>Resources</th>
+                        <th>Privacy</th>
+                    </tr>
+                    <tr>
+                        <td><a class="tbl-link" target="_blank" href="https://github.com/Piccolowen/piccolowen.github.io">GitHub repository</a></td>
+                        <td><a class="tbl-link" href="privacy/summary.html">Summary</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><a class="tbl-link" href="">Cookies</a> (404)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><a href="" class="tbl-link">Location</a> (404)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="cookie-alert">
+            <span id="cookie-alert-content"><code>piccolowen.github.io</code> uses Cookies to store data. <a id="cookie-alert-content-a" onclick="closeCookie()">Sounds good!</a></span>
+            <script>
+                //FIRST VISIT 1 MEANS FIRST VISIT IS TRUE
+                //FIRST VISIT 0 MEANS NOT TRUE
+                function closeCookie() {
+                    document.getElementById('cookie-alert').style.display = 'none'
+                    document.cookie = 'firstVisit=0'
+                }
+                window.onload = checkCookie()
+                function checkCookie() {
+                    if (document.cookie == 'firstVisit=1') {
+                        document.getElementById('cookie-alert').style.display = 'block'
+                    }
+                    else {
+                        document.getElementById('cookie-alert').style.display = 'none'
+                    }
+                }
+            </script>
+        </div>
+    </body>
+    <div id="style">
+        <style>
+            html {
+                padding: 10px;
+            }
+        </style>
+    </div>
+</html>

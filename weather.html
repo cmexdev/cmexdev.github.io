@@ -4,36 +4,40 @@
         <title>Forecast - Weather API system</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8">
-        <div id="icon">
-
-        </div>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <div id="icon"></div>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="weather.css">
     </head>
     <body>
+        <!--NO SCRIPT-->
         <noscript>
-        <table id="top"><tr>
-            <th>This page relies on JavaScript to function. Please consider enabling JavaScript for this page.</th>
-        </tr></table>
+            <table id="top">
+                <tr>
+                    <th>This page relies on JavaScript to function. Please consider enabling JavaScript for this page.</th>
+                </tr>
+            </table>
         </noscript>
-        <table id="error">
-        </table>
 
+        <table id="error"></table>
+
+        <!--MAIN PAGE TITLE-->
         <h1 id="forecast-title">The forecast</h1>
         <h5 id="forecast-loc"></h5>
 
-
+        <!--TABLE OF CONTENTS-->
         <h3 id="tbltitle"></h3>
-        <ul id="contents">
-        </ul>
+        <ul id="contents"></ul>
 
+        <!--DISPLAYS THE MAIN FETCH URL WHEN DEVMODE IS ON-->
         <code id="mainurl"></code>
 
+        <!--CURRENT FORECAST-->
         <h2 id="current-forecast"></h2>
         <code id="current-forecast-devurl" class="dev"></code>
         <h5 id="currentdesc"></h5>
         <table id="current"></table>
 
+        <!--ALERTS-->
         <h2 id="alerts">Alerts</h2>
         <code id="alert-devurl"></code>
         <h5>Get alerts for any state</h5>
@@ -42,19 +46,22 @@
         <hr />
         <table id="alert"></table>
 
+        <!--HOURLY FORECAST-->
         <h2 id="hourly"></h2>
         <code id="hourly-devurl"></code>
         <h5 id="hourlydesc"></h5>
         <table id="forecast-hourly"></table>
         <a id="showall"></a>
 
+        <!--DAILY FORECAST-->
         <h2 id="daily"></h2>
         <code id="daily-devurl"></code>
         <h5 id="dailydesc"></h5>
         <table id="forecast"></table>
 
+        <!--MOST RECENT COMMIT: BETA-->
         <h2 id="lastcommit">Most recent commit</h2>
-        <p id="betacommitfeature">This feature is in BETA. <a class="unstyled-a" href="#betacommitfeature" onclick="commitData()">Try it anyway</a>. Do not expect a result.</p>
+        <p id="betacommitfeature">This feature is in BETA. <a class="unstyled-a" href="#betacommitfeature" onclick="commitData()">Try it anyway</a>. Do not expect a result. Note: this gets the most recent commit of the main repository (piccolowen.github.io)</p>
         <table id="lastcommitdata"></table>
         <script>
             var commitsUrl = 'https://api.github.com/repos/Piccolowen/piccolowen.github.io/commits'
@@ -70,21 +77,19 @@
                 commits = Object.keys(commitResult).length
                 console.log('RECENT COMMITS: ' + commits)
                 var commitArrNum = 0
+
             }
         </script>
 
-        <h2 id="credits">Credits</h2>
-
-        <span id="footer">
-            
-        </span>
+        <!--SEE ALSO-->
+        <h2 id="seealso">See also</h2>
+        <span id="footer"></span>
         <div>
             View source code on <a href="https://github.com/Piccolowen/piccolowen.github.io/blob/master/weather.html">GitHub</a>.
             Powered by <a href="https://api.weather.gov">api.weather.gov</a>
-            <p>I was bored, so I created this. It is a simple HTML/JS API request system. <b>NOTE: THIS DOES NOT WORK WELL ON
-                    MOBILE</b>. I am working very hard on this project, the main system will eventually go into a weather app I am
-                creating. Alerts do not require location.</p>
-                <p>Found and issue? Describe it in <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSflIrKpFAwLO3RRQkgUfyrztWmUdnfWQlc-MCJw1j_NH6OLFA/viewform?usp=sf_link">this Google Form</a></p>
+            <p>I was bored, so I created this. It is a simple HTML/JS API request system.</p>
+            <p>Found an issue? Describe it in <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSflIrKpFAwLO3RRQkgUfyrztWmUdnfWQlc-MCJw1j_NH6OLFA/viewform?usp=sf_link">this Google Form</a></p>
+            <p>Visit the <a>error wiki</a>.</p>
         </div>
         <script>
             var foot = document.getElementById('footer')
@@ -105,7 +110,6 @@
             }
         </script>
         <br />
-
         <a href="#">Go back to top</a>
 
         <script>
@@ -128,8 +132,8 @@
             var dateUser = new Date()
             var dateUserDay = dateUser.getDate()
             var forecastLoc = ''
-            console.log(dateUserDay)
-            console.log(hourUser)
+            console.log('CURRENT DAY OF USER: ' + dateUserDay)
+            console.log('CURRENT HOUR OF USER: ' + hourUser)
             var hourOut
             var currentArrNum
             navigator.geolocation.getCurrentPosition(locSys, locError)
@@ -174,8 +178,8 @@
                 tblOfContents.appendChild(dailyLink)
                 var credit = document.createElement('li')
                 var creditA = document.createElement('a')
-                creditA.href = '#credits'
-                creditA.textContent = 'Credits'
+                creditA.href = '#seealso'
+                creditA.textContent = 'See also'
                 credit.appendChild(creditA)
                 tblOfContents.appendChild(credit)
                 var commit = document.createElement('li')
@@ -468,97 +472,9 @@
                 }
             }
         </script>
-        <style>
-            html {
-                margin: 0;
-                transition: 300ms;
-            }
-            *{
-                transition: 150ms;
-            }
-            body {
-                margin: 5px;
-                padding: 5px;
-            }
-            table {
-                border: black;
-                border-style: solid;
-                width: 100%;
-            }
-            .name, .temp, .desc, .sev, .like, .noal, .instruc, .wind {
-                padding: 5px;
-                margin: 10px;
-                border: black;
-                border-width: 1px;
-                border-style: solid;
-            }
-            .icon {
-                padding: 10px;
-            }
-            table:hover {
-                cursor: default;
-            }
-            .name:hover {
-                color: white;
-                background-color: green;
-            }
-            .temp:hover {
-                color: white;
-                background-color: blue;
-            }
-            .desc:hover {
-                color: white;
-                background-color: orangered;
-            }
-            .wind:hover {
-                color: white;
-                background-color: fuchsia;
-            }
-            embed {
-                border: black;
-                border-style: solid;
-            }
-            a {
-                text-decoration: none;
-                color: blue;
-                transition: 300ms;
-            }
-            #top {
-                color: white;
-                background-color: red;
-            }
-            .sev:hover {
-                color: white;
-                background-color: crimson;
-            }
-            .like:hover {
-                color: white;
-                background-color: darkgoldenrod;
-            }
-            .noal:hover {
-                color: white;
-                background-color: darkorchid;
-            }
-            .instruc:hover {
-                color: white;
-                background-color: blueviolet;
-            }
-            #error {
-                color: white;
-                background-color: red;
-                font-weight: bold;
-            }
-            #devmode:hover {
-                cursor: pointer;
-            }
-            .unstyled-a {
-                color: rgb(0, 0, 255)
-            }
-            .unstyled-a {
-                text-decoration: none;
-                color: rgb(0, 3, 252);
-                text-decoration-color:rgb(0, 3, 252);
-                cursor: pointer;
+        <style class="emergency-css">
+            .html {
+                font-family: Arial, Helvetica, sans-serif;
             }
         </style>
     </body>
