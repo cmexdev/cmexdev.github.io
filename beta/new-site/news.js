@@ -18,16 +18,39 @@ newsDesc.className = 'news-desc'
 newsDesc.textContent = newsDescTxt
 out.appendChild(newsDesc)
 
-$.getJSON("test.json", function (data) {
-    var items = [];
-    $.each(data, function (key, val) {
-        items.push("<li id='" + key + "'>" + val + "</li>");
-    });
+var items = []
 
-    $("<ul/>", {
-        "class": "my-new-list",
-        html: items.join("")
-    }).appendTo("body");
+$.getJSON("news.json", function (data) {
+    var dataarr = 0
+    var datalen = Object.keys(data).length
+    while (dataarr < datalen) {
+        var newsTitle = document.createElement('div')
+        newsTitle.textContent = data[dataarr].title
+        newsTitle.className = 'news-title'
+        out.appendChild(newsTitle)
+
+        var newsAuthor = document.createElement('div')
+        newsAuthor.textContent = data[dataarr].author
+        newsAuthor.className = 'news-author'
+        out.appendChild(newsAuthor)
+
+        var newsContent = document.createElement('div')
+        newsContent.textContent = data[dataarr].content
+        newsContent.className = 'news-content'
+        out.appendChild(newsContent)
+
+        var newsWritten = document.createElement('div')
+        if (data[dataarr].date == undefined) {
+            newsWritten.textContent = 'No "written-on" date provided'
+        }
+        else {
+            newsWritten.textContent = 'Written on: ' + data[dataarr].date
+        }
+        newsWritten.className = 'news-date'
+        out.appendChild(newsWritten)
+
+        dataarr++
+    }
 });
 
 var newsHr = document.createElement('hr')

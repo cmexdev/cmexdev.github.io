@@ -14,11 +14,13 @@
         <div id="logo">
             <span id="logo-title">The Piccolowen Hub</span>
             -
-            <span class="services" id="logo-link"><a title="Services" href="">Services</a></span>
+            <span class="services" id="logo-link"><a title="Services" href="services.html">Services</a></span>
             -
             <span id="logo-link"><a title="About" href="">About</a></span>
             -
             <span id="logo-link"><a title="Contact" href="">Contact</a></span>
+
+            <span id="login-nav"><a title="Login" href="login.html">Login</a></span>
         </div>
 
         <div id="welcome">
@@ -42,6 +44,7 @@
             <div id="news">
                 <span id="news-in"></span>
                 <script src="news.js"></script>
+                <hr />
             </div>
         </div>
 
@@ -57,7 +60,7 @@
                         <td><a class="tbl-link" href="privacy/summary.html">Summary</a></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td><a class="tbl-link" href="https://getbootstrap.com/">Bootstrap</a></td>
                         <td><a class="tbl-link" href="">Cookies</a> (404)</td>
                     </tr>
                     <tr>
@@ -84,6 +87,33 @@
                     }
                     else {
                         document.getElementById('cookie-alert').style.display = 'none'
+                    }
+                }
+            </script>
+        </div>
+        <div>
+            <script>
+                var username = ''
+                var usernum = ''
+                var userimg = ''
+
+                window.onload = () => {
+                    const fragment = new URLSearchParams(window.location.hash.slice(1))
+
+                    if (fragment.has('access_token')) {
+                        const accessToken = fragment.get('access_token')
+                        const tokenType = fragment.get('token_type')
+
+                        fetch('https://discord.com/api/users/@me', {
+                            headers: {
+                                authorization: `${tokenType} ${accessToken}`
+                            }
+                        })
+                            .then(res => res.json())
+                            .then(response => {
+                                console.log(response)
+                            })
+                            .catch(console.error)
                     }
                 }
             </script>

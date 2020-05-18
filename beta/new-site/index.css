@@ -17,6 +17,7 @@ html:hover {
     border-style: solid;
     font-size: 50px;
     font-weight: 600;
+    list-style-type: none;
 }
 #logo-title {
     padding: 5px;
@@ -86,4 +87,19 @@ td {
 }
 .noscript-try, .noscript-y {
     font-size: 25px;
+}
+#login-nav {
+    float: right;
+}
+a[title="Login"] {
+    border: white solid;
+    border-radius: 10px;
+    font-size: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+a[title="Login"]:hover {
+    border: gold solid;
+    color: white;
+    background-color: goldenrod;
 }

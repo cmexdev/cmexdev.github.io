@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login - The Piccolowen Hub</title>
+</head>
+
+<body>
+    <div id="main">
+        <h1 id="title">Login</h1>
+        <p>Login! (We only support logging in with Discord)</p>
+        <div>
+            <table>
+                <tr>
+                    <td><input type="text" name="username" id="username-unusable"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="password" id="password-unusable"></td>
+                </tr>
+                <tr>
+                    <td><a href="https://discord.com/api/oauth2/authorize?client_id=671823085695139840&redirect_uri=https%3A%2F%2Fpiccolowen.github.io%2Fbeta%2Fnew-site%2Findex.html&response_type=token&scope=identify%20connections">Login with Discord</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+<style>
+    #main {
+        text-decoration: none;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 500;
+        text-align: center;
+        margin: 5%;
+        border: blue;
+        border-radius: 10px;
+        border-style: solid;
+    }
+
+    html:hover {
+        cursor: default;
+    }
+
+    h1 {
+        font-weight: 500;
+    }
+
+    table {
+        width: 100%;
+        font-size: 25px;
+        border: grey;
+        border-radius: 10px;
+        border-style: solid;
+        border-width: 1px;
+        padding: 10px;
+    }
+
+    th,
+    td {
+        border: grey;
+        border-width: 1px;
+        border-radius: 10px;
+        border-style: solid;
+        padding: 10px;
+        margin: 10px;
+    }
+
+    a {
+        text-decoration: none;
+        color: blue;
+        transition: 300ms;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+</html>
