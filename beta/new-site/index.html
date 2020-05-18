@@ -94,6 +94,7 @@
         <div>
             <script>
                 var username = ''
+                var fullusername = ''
                 var usernum = ''
                 var userimg = ''
 
@@ -111,12 +112,24 @@
                         })
                             .then(res => res.json())
                             .then(response => {
+                                username = response.username
+                                fullusername = response.username + '#' + response.discriminator
+                                usernum = response.id
+                                userimg = 'https://cdn.discordapp.com/avatars/' + response.id + '/' + response.avatar + '.png'
+
                                 var loginOut = document.getElementById('login-nav')
                                 loginOut.textContent = ''
+                                loginOut.style.float = 'none'
 
                                 var loginImg = document.createElement('img')
-                                loginImg.src = 'https://cdn.discordapp.com/avatars/' + response.id + '/' + response.avatar + '.png'
+                                loginImg.src = userimg
+                                loginImg.style.width = '50%'
                                 loginOut.appendChild(loginImg)
+
+                                var loginName = document.createElement('span')
+                                loginName.textContent = username
+                                loginName.style.fontSize = '10px'
+                                loginOut.appendChild(loginName)
                             })
                             .catch(console.error)
                     }
