@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html id="#html">
     <head>
+        <!--META AND HEAD ELEMENTS-->
         <title>Forecast - Weather API system</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8">
@@ -30,6 +31,9 @@
 
         <!--DISPLAYS THE MAIN FETCH URL WHEN DEVMODE IS ON-->
         <code id="mainurl"></code>
+
+        <!--DISPLAYS IF THERE WAS AN ERROR IN GEOLOCATION-->
+        <table id="geo-error-coords"></table>
 
         <!--CURRENT FORECAST-->
         <h2 id="current-forecast"></h2>
@@ -112,6 +116,7 @@
         <br />
         <a href="#">Go back to top</a>
 
+        <!--MAIN SCRIPT-->
         <script>
             var status = ''
             var locLat = ''
@@ -388,6 +393,8 @@
                     arrNum++
                 }
             }
+
+            //GEOLOCATION ERRORS
             function locError(error) {
                 var errBr = document.createElement('br')
                 switch (error.code) {
@@ -412,10 +419,69 @@
                         err.append(errmsg)
                         break;
                 }
+                return askForCoords()
+            }
+            var goButton = ''
+            var coordsOut = document.getElementById('geo-error-coords')
+            var inputSub = ''
+            function askForCoords() {
+                var coordsTitle = document.createElement('h3')
+                coordsTitle.textContent = 'There was an error with geolocation...'
+                coordsTitle.style.padding = '5px'
+                coordsTitle.style.margin = '10px'
+                coordsOut.appendChild(coordsTitle)
+
+                var coordsDesc = document.createElement('span')
+                coordsDesc.textContent = 'Enter your own coordinates:'
+                coordsDesc.style.padding = '5px'
+                coordsDesc.style.margin = '10px'
+                coordsOut.appendChild(coordsDesc)
+
+                var coordsA = document.createElement('a')
+                coordsA.href = 'https://www.google.com/search?q=what+are+the+coordinates+of+my+location'
+                coordsA.textContent = 'What are my coordinates?'
+                coordsA.target = '_blank'
+                coordsA.style.padding = '5px'
+                coordsA.style.margin = '10px'
+                coordsOut.appendChild(coordsA)
+
+                var coordsBr = document.createElement('br')
+                coordsOut.appendChild(coordsBr)
+
+                var inputLat = document.createElement('input')
+                inputLat.value = '40.7128'
+                inputLat.type = 'number'
+                inputLat.name = 'coord'
+                inputLat.id = 'coord-lat'
+                inputLat.style.padding = '5px'
+                inputLat.style.margin = '10px'
+                coordsOut.appendChild(inputLat)
+
+                var inputLon = document.createElement('input')
+                inputLon.value = '-74.0060'
+                inputLon.type = 'number'
+                inputLon.name = 'coord'
+                inputLon.id = 'coord-lon'
+                inputLon.style.padding = '5px'
+                inputLon.style.margin = '10px'
+                coordsOut.appendChild(inputLon)
+
+                inputSub = document.createElement('button')
+                inputSub.textContent = 'Go'
+                inputSub.style.padding = '5px'
+                inputSub.style.margin = '10px'
+                inputSub.id = 'input-error-go'
+                inputSub.onclick = function sendCoords() {
+                    locLat = document.getElementById('coord-lat').value
+                    locLon = document.getElementById('coord-lon').value
+                    console.log(locLat + ',' + locLon)
+                    return getStatus()
+                }
+                goButton = document.getElementById('input-error-go')
+                coordsOut.appendChild(inputSub)
             }
         </script>
         <script>
-            //https://api.weather.gov/alerts/active?area={state}
             async function getActiveAlerts() {
                 var stateUser = document.getElementById('statein').value
                 var alertUrl = 'https://api.weather.gov/alerts/active?area=' + stateUser
@@ -426,8 +492,24 @@
                 response = await fetch(alertUrl)
                 result = await response.json()
                 var arrLen = Object.keys(result.features).length
+                var alertNum = document.createElement('div')
+                alertNum.textContent = arrLen + ' active alerts'
+                alertNum.className = 'name'
+                var alertBr = document.createElement('hr')
+                alertsOut.appendChild(alertNum)
+                alertsOut.appendChild(alertBr)
                 if (result.features != '') {
                     while (arrNum < arrLen) {
+                        //ATTEMPT AT GETTING MORE SPECIFIC ALERTS
+                        /*var coordsLen = Object.keys(result.features[arrNum].geometry.coordinates).length
+                        var coordsArr = 0
+                        while (coordsArr < coordsLen) {
+                            if (result.features[arrNum].geometry.coordinates[coordsArr]) {
+                                console.log(result.features[arrNum].geometry.coordinates[coordsArr])
+                            }
+                            coordsArr++
+                        }*/
+                        
                         var alertName = document.createElement('div')
                         alertName.textContent = result.features[arrNum].properties.headline
                         alertName.className = 'name'
@@ -449,7 +531,7 @@
                         alertsOut.append(alertDesc)
 
                         var alertInstruc = document.createElement('div')
-                        if (result.features[arrNum].properties.instruction == 'null') {
+                        if (result.features[arrNum].properties.instruction == null) {
                             alertInstruc.textContent = 'No instructions provided'
                         }
                         else {
