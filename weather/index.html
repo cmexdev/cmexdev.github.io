@@ -8,7 +8,7 @@
         <div id="icon"></div>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="weather.css">
-        <script src="src/jquery-3.5.1.js"></script>
+        <script src="../src/jquery-3.5.1.js"></script>
     </head>
     <body>
         <!--NO SCRIPT-->
@@ -24,6 +24,7 @@
 
         <!--MAIN PAGE TITLE-->
         <h1 id="forecast-title">The forecast</h1>
+        <p>New URL! <code>piccolowen.github.io/weather</code></p>
         <h5 id="forecast-loc"></h5>
 
         <!--TABLE OF CONTENTS-->
@@ -45,9 +46,10 @@
         <!--ALERTS-->
         <h2 id="alerts">Alerts</h2>
         <code id="alert-devurl"></code>
-        <h5>Get alerts for any state</h5>
+        <h5 title="U.S. States and Territories only">Get alerts for any state</h5>
+        <p>NOTE: U.S. STATES AND TERRITORIES ONLY</p>
         <p>Enter state</p>
-        <input id="statein" type="text" placeholder="ex: OH"> <button onclick="getActiveAlerts()">Go</button>
+        <input id="statein" type="text" placeholder="Enter state"> <button onclick="getActiveAlerts()">Go</button>
         <hr />
         <table id="alert"></table>
 
@@ -95,6 +97,7 @@
             <p>I was bored, so I created this. It is a simple HTML/JS API request system.</p>
             <p>Found an issue? Describe it in <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSflIrKpFAwLO3RRQkgUfyrztWmUdnfWQlc-MCJw1j_NH6OLFA/viewform?usp=sf_link">this Google Form</a></p>
             <p>Visit the <a>error wiki</a>.</p>
+            <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSeStfkBWE-GdcHGgHDHINo9noY_17t0gkSGnM1oqqmIFKhOqA/viewform?usp=sf_link">Request a feature</a></p>
         </div>
         <script>
             var foot = document.getElementById('footer')
@@ -591,92 +594,118 @@
             }
         </script>
         <script>
+            var alertsOut = document.getElementById('alert')
             var cookies = document.cookie
+            var stateUp
+            var alertUrl = ''
+            var defStateCookie3 = ''
             async function getActiveAlerts() {
                 var stateUser = document.getElementById('statein').value
-                var alertUrl = ''
-                if (cookies.includes('rememberState=false')) {
-                    alertUrl = 'https://api.weather.gov/alerts/active?area=' + stateUser
-                }
-                else {
-                    var defStateCookie = document.cookie
-                    if (defStateCookie.includes('defState')) {
-                        var defStateCookie1 = defStateCookie.split('defState=')
-                        defStateCookie2 = defStateCookie1[1].split(';', 1)
-                        enterStateIn.value = defStateCookie2[0]
-                    }
-                    alertUrl = 'https://api.weather.gov/alerts/active?area=' + defStateCookie2
-                }
-                console.log('HEYOOOOO THIS IS THE ALERT URL!' + alertUrl)
-                var alertName = document.createElement('div')
-                var alertsOut = document.getElementById('alert')
-                alertsOut.textContent = ''
-                var arrNum = 0
-                response = await fetch(alertUrl)
-                result = await response.json()
-                var arrLen = Object.keys(result.features).length
-                var alertNum = document.createElement('div')
-                alertNum.textContent = arrLen + ' active alerts'
-                alertNum.className = 'name'
-                var alertBr = document.createElement('hr')
-                alertsOut.appendChild(alertNum)
-                alertsOut.appendChild(alertBr)
-
-                if (result.features != '') {
-                    while (arrNum < arrLen) {
-                        //ATTEMPT AT GETTING MORE SPECIFIC ALERTS
-                        /*var coordsLen = Object.keys(result.features[arrNum].geometry.coordinates).length
-                        var coordsArr = 0
-                        while (coordsArr < coordsLen) {
-                            if (result.features[arrNum].geometry.coordinates[coordsArr]) {
-                                console.log(result.features[arrNum].geometry.coordinates[coordsArr])
-                            }
-                            coordsArr++
-                        }*/
-                        
-                        var alertName = document.createElement('div')
-                        alertName.textContent = result.features[arrNum].properties.headline
-                        alertName.className = 'name'
-                        alertsOut.append(alertName)
-
-                        var alertSev = document.createElement('div')
-                        alertSev.textContent = 'Severity: ' + result.features[arrNum].properties.severity
-                        alertSev.className = 'sev'
-                        alertsOut.append(alertSev)
-
-                        var alertLike = document.createElement('div')
-                        alertLike.textContent = 'Certainty: ' + result.features[arrNum].properties.certainty
-                        alertLike.className = 'like'
-                        alertsOut.append(alertLike)
-
-                        var alertDesc = document.createElement('div')
-                        alertDesc.textContent = result.features[arrNum].properties.description
-                        alertDesc.className = 'desc'
-                        alertsOut.append(alertDesc)
-
-                        var alertInstruc = document.createElement('div')
-                        if (result.features[arrNum].properties.instruction == null) {
-                            alertInstruc.textContent = 'No instructions provided'
+                stateUp = stateUser.toUpperCase()
+                var sendState = ''
+                var items = []
+                $.getJSON('states.json', function(data) {
+                    $.each(data, function(key, val) {
+                        items.push(key + '=' + val)
+                        if (stateUp == key || stateUp == val) {
+                            sendState = key
                         }
                         else {
-                            alertInstruc.textContent = 'Instructions: ' + result.features[arrNum].properties.instruction
+                            return unknownState()
                         }
-                        alertInstruc.className = 'instruc'
-                        alertsOut.append(alertInstruc)
+                    })
+                    if (cookies.includes('rememberState=false')) {
+                        alertUrl = 'https://api.weather.gov/alerts/active?area=' + sendState
+                    }
+                    else {
+                        var defStateCookie = document.cookie
+                        if (defStateCookie.includes('defState')) {
+                            var defStateCookie1 = defStateCookie.split('defState=')
+                            defStateCookie2 = defStateCookie1[1].split(';', 1)
+                            defStateCookie3 = defStateCookie2[0].toUpperCase()
+                            enterStateIn.value = defStateCookie2[0]
+                        }
+                        alertUrl = 'https://api.weather.gov/alerts/active?area=' + defStateCookie3[0]
+                    }
+                    return getAlerts()
+                })
 
-                        var hr = document.createElement('hr')
-                        alertsOut.append(hr)
+            }
+            async function getAlerts() {
+                    var alertName = document.createElement('div')
+                    alertsOut.textContent = ''
+                    var arrNum = 0
+                    response = await fetch(alertUrl)
+                    result = await response.json()
+                    var arrLen = Object.keys(result.features).length
+                    var alertNum = document.createElement('div')
+                    alertNum.textContent = arrLen + ' active alerts'
+                    alertNum.className = 'name'
+                    var alertBr = document.createElement('hr')
+                    alertsOut.appendChild(alertNum)
+                    alertsOut.appendChild(alertBr)
 
-                        arrNum++
+                    if (result.features != '') {
+                        while (arrNum < arrLen) {
+                            //ATTEMPT AT GETTING MORE SPECIFIC ALERTS
+                            /*var coordsLen = Object.keys(result.features[arrNum].geometry.coordinates).length
+                            var coordsArr = 0
+                            while (coordsArr < coordsLen) {
+                                if (result.features[arrNum].geometry.coordinates[coordsArr]) {
+                                    console.log(result.features[arrNum].geometry.coordinates[coordsArr])
+                                }
+                                coordsArr++
+                            }*/
+
+                            var alertName = document.createElement('div')
+                            alertName.textContent = result.features[arrNum].properties.headline
+                            alertName.className = 'name'
+                            alertsOut.append(alertName)
+
+                            var alertSev = document.createElement('div')
+                            alertSev.textContent = 'Severity: ' + result.features[arrNum].properties.severity
+                            alertSev.className = 'sev'
+                            alertsOut.append(alertSev)
+
+                            var alertLike = document.createElement('div')
+                            alertLike.textContent = 'Certainty: ' + result.features[arrNum].properties.certainty
+                            alertLike.className = 'like'
+                            alertsOut.append(alertLike)
+
+                            var alertDesc = document.createElement('div')
+                            alertDesc.textContent = result.features[arrNum].properties.description
+                            alertDesc.className = 'desc'
+                            alertsOut.append(alertDesc)
+
+                            var alertInstruc = document.createElement('div')
+                            if (result.features[arrNum].properties.instruction == null) {
+                                alertInstruc.textContent = 'No instructions provided'
+                            }
+                            else {
+                                alertInstruc.textContent = 'Instructions: ' + result.features[arrNum].properties.instruction
+                            }
+                            alertInstruc.className = 'instruc'
+                            alertsOut.append(alertInstruc)
+
+                            var hr = document.createElement('hr')
+                            alertsOut.append(hr)
+
+                            arrNum++
+                        }
+                    }
+                    else {
+                        var noAlert = document.createElement('div')
+                        noAlert.textContent = 'No alerts for provided state!'
+                        noAlert.className = 'noal'
+                        alertsOut.append(noAlert)
                     }
                 }
-                else {
-                    var noAlert = document.createElement('div')
-                    noAlert.textContent = 'No alerts for provided state!'
-                    noAlert.className = 'noal'
-                    alertsOut.append(noAlert)
+                function unknownState() {
+                    var noState = document.createElement('div')
+                    noState.textContent = 'Unknown state: ' + stateUp
+                    noState.className = 'noal'
+                    alertsOut.append(noState)
                 }
-            }
         </script>
         <style class="emergency-css">
             .html {

@@ -1,6 +1,7 @@
 html {
   margin: 0;
   transition: 300ms;
+  padding: 5px;
 }
 * {
   transition: 150ms;
