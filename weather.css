@@ -101,3 +101,11 @@ hr {
     border-width: 1px;
     border-style: solid;
 }
+table > input {
+  padding: 5px;
+  margin: 10px;
+}
+
+.input-disabled:hover {
+  cursor: not-allowed;
+}

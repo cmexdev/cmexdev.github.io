@@ -8,6 +8,7 @@
         <div id="icon"></div>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="weather.css">
+        <script src="src/jquery-3.5.1.js"></script>
     </head>
     <body>
         <!--NO SCRIPT-->
@@ -99,7 +100,99 @@
             var foot = document.getElementById('footer')
             foot.textContent = 'Created by Piccolowen on 4/29/2020 and last updated on ' + document.lastModified + '. Styling by Bootstrap.'
         </script>
-        <hr />
+
+        <!--PAGE SETTINGS-->
+        <h2 id="settings">Page settings</h2>
+        <table id="settings-out"></table>
+        <script>
+            var defStateCookie2 = ''
+            var enterState = document.createElement('label')
+                var enterStateIn = document.createElement('input')
+                enterStateIn.placeholder = 'ex: OH'
+                enterStateIn.type = 'text'
+                enterStateIn.id = 'state-in'
+                enterState.textContent = 'Enter state'
+
+
+                var br = document.createElement('br')
+
+                var enterStateSet = document.createElement('button')
+                enterStateSet.id = 'set-state'
+                enterStateSet.textContent = 'Set as default alert state'
+            var settingsOut = document.getElementById('settings-out')
+            var state = document.createElement('input')
+            state.type = 'checkbox'
+            var stateCookie = document.cookie
+            if (stateCookie.includes('rememberState=true') == true) {
+                state.checked = true
+            }
+            else {
+                state.checked = false
+            }
+            state.id = 'remember-state-check'
+            settingsOut.appendChild(state)
+            var stateLabel = document.createElement('label')
+            stateLabel.textContent = 'Remember my alert state'
+            settingsOut.appendChild(stateLabel)
+
+            var defStateCookie = document.cookie
+            if (defStateCookie.includes('defState')) {
+                var defStateCookie1 = defStateCookie.split('defState=')
+                defStateCookie2 = defStateCookie1[1].split(';', 1)
+                enterStateIn.value = defStateCookie2[0]
+            }
+
+    if ($('#remember-state-check').prop('checked') == true) {
+        enterStateIn.disabled = false
+        enterStateIn.className = ''
+        enterStateSet.disabled = false
+        enterStateSet.className = ''
+    }
+    else {
+        enterStateIn.disabled = true
+        enterStateIn.className = 'input-disabled'
+        enterStateSet.disabled = true
+        enterStateSet.className = 'input-disabled'
+    }
+    settingsOut.appendChild(br)
+    settingsOut.appendChild(enterState)
+    settingsOut.appendChild(enterStateIn)
+    settingsOut.appendChild(enterStateSet)
+
+            $('#remember-state-check').change(function() {
+                console.log($('#remember-state-check').prop('checked'))
+                document.cookie = 'rememberState=' + $('#remember-state-check').prop('checked')
+                
+                if ($('#remember-state-check').prop('checked') == true) {
+                    enterStateIn.disabled = false
+                    enterStateIn.className = ''
+                    enterStateSet.disabled = false
+                    enterStateSet.className = ''
+                }
+                else {
+                    enterStateIn.disabled = true
+                    enterStateIn.className = 'input-disabled'
+                    enterStateSet.disabled = true
+                    enterStateSet.className = 'input-disabled'
+                }
+                settingsOut.appendChild(br)
+                settingsOut.appendChild(enterState)
+                settingsOut.appendChild(enterStateIn)
+                settingsOut.appendChild(enterStateSet)
+            })
+
+            document.getElementById('set-state').onclick = function() {
+                var defState = document.getElementById('state-in').value
+                document.cookie = 'defState=' + defState
+                console.log('set def state as ' + defState)
+            }
+
+            window.onload = function() {
+                if (document.cookie.includes('rememberState=true')) {
+                    return getActiveAlerts()
+                }
+            }
+        </script>
         <a href="#" id="devmode" onclick="showDev()"></a>
         <script>
             function showDev() {
@@ -113,7 +206,7 @@
                 mainUrl.textContent = 'MAIN FETCH URL: ' + urlDaily
             }
         </script>
-        <br />
+        <hr>
         <a href="#">Go back to top</a>
 
         <!--MAIN SCRIPT-->
@@ -191,6 +284,21 @@
                 var commitA = document.createElement('a')
                 commitA.textContent = 'Most recent commit'
                 commitA.href = '#lastcommit'
+                var settings = document.createElement('li')
+                var settingsA = document.createElement('a')
+                settingsA.textContent = 'Page settings'
+                settingsA.href = '#settings'
+                settings.appendChild(settingsA)
+                tblOfContents.appendChild(settings)
+
+                var settingsOut = document.getElementById('settings-out')
+
+                var devmodeCheck = document.createElement('input')
+                devmodeCheck.type = 'checkbox'
+                var devmodeLabel = document.createElement('label')
+                devmodeLabel.textContent = 'Developer mode'
+                settingsOut.appendChild(devmodeCheck)
+                settingsOut.appendChild(devmodeLabel)
 
                 var url = 'https://api.weather.gov'
                 var response = await fetch(url)
@@ -475,6 +583,7 @@
                     locLat = document.getElementById('coord-lat').value
                     locLon = document.getElementById('coord-lon').value
                     console.log(locLat + ',' + locLon)
+                    coordsOut.textContent = ''
                     return getStatus()
                 }
                 goButton = document.getElementById('input-error-go')
@@ -482,9 +591,23 @@
             }
         </script>
         <script>
+            var cookies = document.cookie
             async function getActiveAlerts() {
                 var stateUser = document.getElementById('statein').value
-                var alertUrl = 'https://api.weather.gov/alerts/active?area=' + stateUser
+                var alertUrl = ''
+                if (cookies.includes('rememberState=false')) {
+                    alertUrl = 'https://api.weather.gov/alerts/active?area=' + stateUser
+                }
+                else {
+                    var defStateCookie = document.cookie
+                    if (defStateCookie.includes('defState')) {
+                        var defStateCookie1 = defStateCookie.split('defState=')
+                        defStateCookie2 = defStateCookie1[1].split(';', 1)
+                        enterStateIn.value = defStateCookie2[0]
+                    }
+                    alertUrl = 'https://api.weather.gov/alerts/active?area=' + defStateCookie2
+                }
+                console.log('HEYOOOOO THIS IS THE ALERT URL!' + alertUrl)
                 var alertName = document.createElement('div')
                 var alertsOut = document.getElementById('alert')
                 alertsOut.textContent = ''
@@ -498,6 +621,7 @@
                 var alertBr = document.createElement('hr')
                 alertsOut.appendChild(alertNum)
                 alertsOut.appendChild(alertBr)
+
                 if (result.features != '') {
                     while (arrNum < arrLen) {
                         //ATTEMPT AT GETTING MORE SPECIFIC ALERTS
