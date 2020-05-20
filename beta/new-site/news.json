@@ -8,5 +8,16 @@
     {
         "title": "Heyo!",
         "content": "Good news! As far as we know, there will be no rate limit on the API!"
+    },
+    {
+        "title": "A note about the login system",
+        "author": "Piccolowen",
+        "content": "Once you login, the website will store your data in cookies, as if we will remember you logged in. Although we wish this was true, it isn't. Once you close the page, you will have to re-log in. But why log in anyway? As of right now, there is no reason to log in.",
+        "date": "5/20/2020 5:45PM"
+    },
+    {
+        "title": "The NEWS: Powered by JSON",
+        "author": "Piccolowen",
+        "content": "If you're seeing this, that means you have JavaScript enabled! Good choice! This 'article' and all the others get onto this page through jQuery's getJSON."
     }
 ]

@@ -6,19 +6,22 @@
         <link href="index.css" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="../../src/jquery-3.5.1.js"></script>
-        <!--OPTIONAL STYLING
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163374942-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'UA-163374942-1');
+        </script>
     </head>
     <body>
         <div id="logo">
             <span id="logo-title">The Piccolowen Hub</span>
             -
             <span class="services" id="logo-link"><a title="Services" href="services.html">Services</a></span>
-            -
-            <span id="logo-link"><a title="About" href="">About</a></span>
-            -
-            <span id="logo-link"><a title="Contact" href="">Contact</a></span>
+            <span id="logo-link"><a title="About" href=""></a></span>
+            <span id="logo-link"><a title="Contact" href=""></a></span>
 
             <span id="login-nav"><a title="Login" href="login.html">Login</a></span>
         </div>
@@ -44,7 +47,7 @@
             <div id="news">
                 <span id="news-in"></span>
                 <script src="news.js"></script>
-                <hr />
+                <hr>
             </div>
         </div>
 
@@ -69,6 +72,23 @@
                     </tr>
                 </table>
             </div>
+        </div>
+
+        <hr>
+
+        <div>
+            <p id="browser-details">Browser details unavailable.</p>
+            <script>
+                document.getElementById('browser-details').innerHTML = 'Browser details | Screen height: <b>' + window.screen.height + '</b>. Screen width: <b>' + window.screen.width + '</b>. Orientation: <b>' + window.screen.orientation.type + '</b> (' + window.screen.orientation.angle + ' angle). Navigator code name: <b>' + window.navigator.appCodeName + '</b>. Navigator app name: <b>' + window.navigator.appName + '</b>. Navigator language: <b>' + window.navigator.language + '</b>. Navigator status (online): <b>' + window.navigator.onLine + '</b>. Navigator platform: <b>' + window.navigator.platform + '</b>. Navigator user agent: <b>' + window.navigator.userAgent + '</b>. Navigator vendor: <b>' + window.navigator.vendor + '</b>.'
+            </script>
+            <p id="doc-details">Document details unavailable.</p>
+            <script>
+                document.getElementById('doc-details').innerHTML = 'Document details | Document URL: <b>' + 'REMOVED' + '</b>. Document charset: <b>' + document.charset + '</b>. Base domain: <b>' + document.domain + '</b>. Document title: <b>' + document.title + '</b>.'
+            </script>
+            <p id="date">Date unavailable.</p>
+            <script>
+                document.getElementById('date').innerHTML = 'Date: <b>' + new Date() + '</b>'
+            </script>
         </div>
 
         <div id="cookie-alert">
@@ -97,7 +117,7 @@
                 var fullusername = ''
                 var usernum = ''
                 var userimg = ''
-
+                
                 window.onload = () => {
                     const fragment = new URLSearchParams(window.location.hash.slice(1))
 
@@ -128,6 +148,7 @@
 
                                 var loginImg = document.createElement('img')
                                 loginImg.src = userimg
+                                loginImg.style.float = 'right'
                                 loginImg.style.width = '50px'
                                 loginImg.style.border = 'gold solid'
                                 loginImg.style.borderRadius = '50%'
@@ -136,6 +157,7 @@
                                 var loginName = document.createElement('span')
                                 loginName.textContent = username
                                 loginName.style.fontSize = '20px'
+                                loginName.style.float = 'right'
                                 loginOut.appendChild(loginName)
                             })
                             .catch(console.error)

@@ -94,12 +94,26 @@ td {
 a[title="Login"] {
     border: white solid;
     border-radius: 10px;
+    border-width: 2px;
     font-size: 25px;
     text-transform: uppercase;
     letter-spacing: 2px;
+    font-weight: lighter;
 }
 a[title="Login"]:hover {
     border: gold solid;
     color: white;
     background-color: goldenrod;
+}
+.userimg, .username {
+    float: right;
+}
+.username {
+    padding-top: 15px;
+}
+.news-article {
+    border: white solid;
+}
+.news-title, .news-author, .news-content, .news-date {
+    padding: 5px;
 }
