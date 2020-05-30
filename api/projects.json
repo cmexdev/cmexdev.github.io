@@ -1,0 +1,16 @@
+{
+    "projects": [
+        {
+            "name": "New website",
+            "desc": null,
+            "state": "paused",
+            "state-reason": "Working on other projects"
+        },
+        {
+            "name": "New weather system",
+            "desc": null,
+            "state": "active",
+            "state-reason": null
+        }
+    ]
+}
