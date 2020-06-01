@@ -1,0 +1,10 @@
+{
+    "news": [
+        {
+            "title": "New API++ front-end and back-end!",
+            "author": "Piccolowen",
+            "date": "6/1/2020",
+            "content": "I decided to re-write pretty much all of the Electron app for API++. I attempted to use React and Material UI but it didn't work out."
+        }
+    ]
+}
