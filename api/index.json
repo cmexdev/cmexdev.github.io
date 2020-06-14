@@ -1,6 +1,5 @@
 {
     "name": "Piccolowen base API URL",
-    "id": "base",
     "desc": "The base URL for the Piccolowen API",
     "urls": [
         {
