@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Forecast - Hourly Forecast</title>
+    <link rel="stylesheet" href="../../index.css" />
+</head>
+
+<body>
+    <!--NAVBAR-->
+    <div class="nav">
+        <nav class="nav-c">
+            <span class="logo">Forecast</span>
+
+            <span class="alerts"><a href="../alerts/">Alerts</a></span>
+
+            <span class="nav-br">|</span>
+
+            <span class="daily"><a href="../daily/">Daily</a></span>
+
+            <span class="nav-br">|</span>
+
+            <span class="hourly selected">Hourly</span>
+
+            <span class="nav-br">|</span>
+
+            <span class="current"><a href="../current/">Current</a></span>
+        </nav>
+    </div>
+    <hr />
+    <!--MAIN CONTENT-->
+    <div class="content">
+        <div class="hourly-stats">
+            <div id="hourly-out"></div>
+        </div>
+    </div>
+    <hr />
+    <!--FOOTER-->
+    <div class="footer">
+        <table class="footer-table">
+            <tr>
+                <th>Help</th>
+                <th>Privacy</th>
+                <th>Developers</th>
+            </tr>
+            <tr>
+                <td>Docs</td>
+                <td>Cookies</td>
+                <td>Dev Docs</td>
+            </tr>
+            <tr>
+                <td>Switch to mobile</td>
+                <td>Location tracking</td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script type="text/javascript">
+    var lat = 0
+    var lon = 0
+    var pos = ''
+    var out = document.getElementById('hourly-out')
+    window.onload = async function checkStatus() {
+        if (navigator.geolocation) {
+            //GEOLOCATION SUPPORTED, CONTINUE
+            var statusResp = await fetch('https://api.weather.gov')
+            var status = await statusResp.json()
+            console.log(status.status)
+            if (status.status == 'OK') {
+                //WEATHER OK, CONTINUE
+                navigator.geolocation.getCurrentPosition(showPos)
+            }
+            else {
+                console.error('WEATHER STATUS: ' + status.status)
+            }
+        }
+        else {
+            //RUN CODE THAT SHOWS A CUSTOM COORDINATES BOX
+            //SHOW ERROR
+            console.error('THIS BROWSER DOES NOT SUPPORT GEOLOCATION')
+        }
+    }
+    async function showPos(position) {
+        lat = position.coords.latitude
+        lon = position.coords.longitude
+        pos = lat + ',' + lon
+        var coordResp = await fetch('https://api.weather.gov/points/' + pos)
+        var coord = await coordResp.json()
+        var houlyResp = await fetch(coord.properties.forecastHourly)
+        var hourly = await houlyResp.json()
+        var hourlyLen = Object.keys(hourly.properties.periods).length
+        var hourlyArr = 0
+        while (hourlyArr < hourlyLen) {
+            var icon = document.createElement('img')
+            icon.src = hourly.properties.periods[hourlyArr].icon
+            out.appendChild(icon)
+
+            var temp = document.createElement('span')
+            temp.textContent = hourly.properties.periods[hourlyArr].temperature
+            temp.className = 'temp'
+            temp.style.fontWeight = 'lighter'
+            out.appendChild(temp)
+
+            var desc = document.createElement('span')
+            desc.textContent = hourly.properties.periods[hourlyArr].shortForecast
+            desc.className = 'element-border desc'
+            out.appendChild(desc)
+
+            var wind = document.createElement('span')
+            wind.textContent = hourly.properties.periods[hourlyArr].windSpeed.toUpperCase() + ' heading ' + hourly.properties.periods[hourlyArr].windDirection
+            wind.className = 'element-border wind'
+            out.appendChild(wind)
+
+            var time = document.createElement('span')
+            var time1 = hourly.properties.periods[hourlyArr].startTime
+            var time2 = time1.split('T')
+            var time3 = time2[1].split(':', 1)
+            if (time3 > 12) {
+                time.textContent = (time3 - 12) + ' PM'
+            }
+            else if (time3 == 0) {
+                time.textContent = '12 AM'
+            }
+            else if (time3 == 12) {
+                time.textContent = '12 PM'
+            }
+            else {
+                time.textContent = time3 + ' AM'
+            }
+            time.style.float = 'right'
+            time.className = 'element-border time'
+            time.style.marginTop = '0px'
+            out.appendChild(time)
+
+            if (hourlyArr == 0) {
+                var rightNow = document.createElement('span')
+                rightNow.textContent = 'Right now'
+                rightNow.style.float = 'right'
+                rightNow.className = 'element-border rn'
+                rightNow.style.marginTop = '0px'
+                out.appendChild(rightNow)
+            }
+
+            var hr = document.createElement('hr')
+            out.appendChild(hr)
+
+            hourlyArr++
+        }
+    }
+</script>
+<!--CSS-->
+<style>
+    .footer {
+        color: white;
+        background-color: rgb(80, 80, 80);
+        border: rgb(80, 80, 80) solid;
+        border-radius: 10px;
+        margin: 10px;
+    }
+
+    .footer-table {
+        color: white;
+        width: 100%;
+    }
+
+    .logo {
+        font-size: 50px;
+    }
+
+    .nav-c {
+        color: white;
+        background-color: rgb(80, 80, 80);
+        border: rgb(80, 80, 80) solid;
+        border-radius: 10px;
+        margin: 10px;
+    }
+
+    .current,
+    .hourly,
+    .daily,
+    .alerts {
+        float: right;
+        transition: 100ms;
+    }
+
+    .nav-br {
+        float: right;
+        padding: 10px;
+        color: rgb(80, 80, 80);
+    }
+
+    .selected {
+        background-color: grey;
+        border: grey solid;
+        border-radius: 10px;
+        border-width: 5px;
+    }
+
+    .current,
+    .daily,
+    .alerts {
+        background-color: rgb(80, 80, 80);
+        border: rgb(80, 80, 80) solid;
+        border-radius: 10px;
+        border-width: 5px;
+    }
+
+    .current:hover,
+    .daily:hover,
+    .alerts:hover {
+        cursor: pointer;
+        background-color: grey;
+        border: grey solid;
+        border-radius: 10px;
+        border-width: 5px;
+    }
+
+    #hourly-out {
+        border: black solid;
+        padding: 10px;
+        margin: 10px;
+    }
+
+    .element-border {
+        border: black solid;
+        border-width: 1px;
+        padding: 5px;
+        margin: 10px;
+        transition: 150ms;
+    }
+
+    .wind:hover {
+        background-color: red;
+        color: white;
+    }
+
+    .temp:hover {
+        color: white;
+        background-color: blue;
+    }
+
+    .temp {
+        font-size: 50px;
+        padding: 5px;
+        margin: 10px;
+        border: black solid;
+        border-width: 1px;
+        transition: 150ms;
+    }
+
+    .desc:hover {
+        color: white;
+        background-color: green;
+    }
+
+    .time {
+        transition: 150ms;
+    }
+
+    .time:hover {
+        background-color: mediumvioletred;
+        color: white;
+    }
+
+    hr {
+        padding: 1px;
+        margin: 10px;
+        background-color: black;
+    }
+
+    .img:hover {
+        background-color: magenta;
+    }
+    .rn {
+        transition: 150ms;
+    }
+    .rn:hover {
+        background-color: darkgoldenrod;
+        color: white;
+    }
+</style>
+
+</html>

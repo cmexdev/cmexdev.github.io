@@ -24,7 +24,7 @@
 
         <!--MAIN PAGE TITLE-->
         <h1 id="forecast-title">The forecast</h1>
-        <p>New URL! <code>piccolowen.github.io/weather</code></p>
+        <p>Try the new <a href="/beta/weather/">BETA</a> weather system!</p>
         <h5 id="forecast-loc"></h5>
 
         <!--TABLE OF CONTENTS-->
@@ -145,22 +145,22 @@
                 enterStateIn.value = defStateCookie2[0]
             }
 
-    if ($('#remember-state-check').prop('checked') == true) {
-        enterStateIn.disabled = false
-        enterStateIn.className = ''
-        enterStateSet.disabled = false
-        enterStateSet.className = ''
-    }
-    else {
-        enterStateIn.disabled = true
-        enterStateIn.className = 'input-disabled'
-        enterStateSet.disabled = true
-        enterStateSet.className = 'input-disabled'
-    }
-    settingsOut.appendChild(br)
-    settingsOut.appendChild(enterState)
-    settingsOut.appendChild(enterStateIn)
-    settingsOut.appendChild(enterStateSet)
+            if ($('#remember-state-check').prop('checked') == true) {
+                enterStateIn.disabled = false
+                enterStateIn.className = ''
+                enterStateSet.disabled = false
+                enterStateSet.className = ''
+            }
+            else {
+                enterStateIn.disabled = true
+                enterStateIn.className = 'input-disabled'
+                enterStateSet.disabled = true
+                enterStateSet.className = 'input-disabled'
+            }
+            settingsOut.appendChild(br)
+            settingsOut.appendChild(enterState)
+            settingsOut.appendChild(enterStateIn)
+            settingsOut.appendChild(enterStateSet)
 
             $('#remember-state-check').change(function() {
                 console.log($('#remember-state-check').prop('checked'))
@@ -350,7 +350,7 @@
                     forecastDaily.append(nameDaily)
 
                     var tempDaily = document.createElement('div')
-                    tempDaily.textContent = result.properties.periods[arrNum].temperature
+                    tempDaily.textContent = result.properties.periods[arrNum].temperature + '°'
                     tempDaily.className = 'temp'
                     forecastDaily.append(tempDaily)
 
@@ -420,7 +420,7 @@
                     forecastHourly.append(hourout)
 
                     var hourTemp = document.createElement('div')
-                    hourTemp.textContent = result.properties.periods[arrNum].temperature
+                    hourTemp.textContent = result.properties.periods[arrNum].temperature + '°'
                     hourTemp.className = 'temp'
                     forecastHourly.append(hourTemp)
 

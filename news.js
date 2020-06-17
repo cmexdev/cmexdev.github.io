@@ -38,7 +38,7 @@ $.getJSON("news.json", function (data) {
         newsOut.appendChild(newsAuthor)
 
         var newsContent = document.createElement('div')
-        newsContent.textContent = data[dataarr].content
+        newsContent.innerHTML = data[dataarr].content
         newsContent.className = 'news-content'
         newsOut.appendChild(newsContent)
 

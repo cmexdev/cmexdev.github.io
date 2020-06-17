@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Forecast - Daily Forecast</title>
+    <link rel="stylesheet" href="../../index.css" />
+</head>
+
+<body>
+    <!--NAVBAR-->
+    <div class="nav">
+        <nav class="nav-c">
+            <span class="logo">Forecast</span>
+
+            <span class="alerts"><a href="../alerts/">Alerts</a></span>
+
+            <span class="nav-br">|</span>
+
+            <span class="daily selected">Daily</span>
+
+            <span class="nav-br">|</span>
+
+            <span class="hourly"><a href="../hourly/">Hourly</a></span>
+
+            <span class="nav-br">|</span>
+
+            <span class="current"><a href="../current/">Current</a></span>
+        </nav>
+    </div>
+    <hr />
+    <!--MAIN CONTENT-->
+    <div class="content">
+        <div class="daily-stats">
+            <div id="daily-out"></div>
+        </div>
+    </div>
+    <hr />
+    <!--FOOTER-->
+    <div class="footer">
+        <table class="footer-table">
+            <tr>
+                <th>Help</th>
+                <th>Privacy</th>
+                <th>Developers</th>
+            </tr>
+            <tr>
+                <td>Docs</td>
+                <td>Cookies</td>
+                <td>Dev Docs</td>
+            </tr>
+            <tr>
+                <td>Switch to mobile</td>
+                <td>Location tracking</td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script>
+    var pos = ''
+    var out = document.getElementById('daily-out')
+    window.onload = async function checkStatus() {
+        var statusResp = await fetch('https://api.weather.gov')
+        var status = await statusResp.json()
+        if (status.status == 'OK') {
+            //WEATHER OK, CONTINUE
+            if (navigator.geolocation) {
+                //GEOLOCATION OK, CONTINUE
+                console.log(status.status)
+                navigator.geolocation.getCurrentPosition(getLoc)
+            }
+        }
+    }
+    async function getLoc(loc) {
+        pos = loc.coords.latitude + ',' + loc.coords.longitude
+        var coordsResp = await fetch('https://api.weather.gov/points/' + pos)
+        var coords = await coordsResp.json()
+        var dailyResp = await fetch(coords.properties.forecast)
+        var daily = await dailyResp.json()
+        var len = Object.keys(daily.properties.periods).length
+        var arr = 0
+        while (arr < len) {
+            var icon = document.createElement('img')
+            icon.src = daily.properties.periods[arr].icon
+            out.appendChild(icon)
+
+            var name = document.createElement('span')
+            name.textContent = daily.properties.periods[arr].name
+            name.className = 'element-border time'
+            name.style.float = 'right'
+            out.appendChild(name)
+
+            var temp = document.createElement('span')
+            temp.textContent = daily.properties.periods[arr].temperature
+            temp.className = 'element-border temp'
+            out.appendChild(temp)
+
+            var shor = document.createElement('span')
+            shor.textContent = daily.properties.periods[arr].shortForecast
+            shor.className = 'element-border desc'
+            out.appendChild(shor)
+
+            var wind = document.createElement('span')
+            wind.textContent = daily.properties.periods[arr].windSpeed + ' heading ' + daily.properties.periods[arr].windDirection
+            wind.className = 'element-border wind'
+            out.appendChild(wind)
+
+            var desc = document.createElement('span')
+            desc.textContent = daily.properties.periods[arr].detailedForecast
+            desc.className = 'element-border name'
+            desc.style.lineHeight = '3'
+            out.appendChild(desc)
+
+            var hr = document.createElement('hr')
+            out.appendChild(hr)
+
+            arr++
+        }
+    }
+</script>
+<!--CSS-->
+<style>
+    .footer {
+        color: white;
+        background-color: rgb(80, 80, 80);
+        border: rgb(80, 80, 80) solid;
+        border-radius: 10px;
+        margin: 10px;
+    }
+
+    .footer-table {
+        color: white;
+        width: 100%;
+    }
+
+    .logo {
+        font-size: 50px;
+    }
+
+    .nav-c {
+        color: white;
+        background-color: rgb(80, 80, 80);
+        border: rgb(80, 80, 80) solid;
+        border-radius: 10px;
+        margin: 10px;
+    }
+
+    .current,
+    .hourly,
+    .daily,
+    .alerts {
+        float: right;
+        transition: 100ms;
+    }
+
+    .nav-br {
+        float: right;
+        padding: 10px;
+        color: rgb(80, 80, 80);
+    }
+
+    .selected {
+        background-color: grey;
+        border: grey solid;
+        border-radius: 10px;
+        border-width: 5px;
+    }
+
+    .current,
+    .hourly,
+    .alerts {
+        background-color: rgb(80, 80, 80);
+        border: rgb(80, 80, 80) solid;
+        border-radius: 10px;
+        border-width: 5px;
+    }
+
+    .current:hover,
+    .hourly:hover,
+    .alerts:hover {
+        cursor: pointer;
+        background-color: grey;
+        border: grey solid;
+        border-radius: 10px;
+        border-width: 5px;
+    }
+
+    #daily-out {
+        border: black solid;
+        padding: 10px;
+        margin: 10px;
+    }
+
+    .element-border {
+        border: black solid;
+        border-width: 1px;
+        padding: 5px;
+        margin: 10px;
+        transition: 150ms;
+    }
+
+    .wind:hover {
+        background-color: red;
+        color: white;
+    }
+
+    .temp:hover {
+        color: white;
+        background-color: blue;
+    }
+
+    .temp {
+        font-size: 50px;
+        padding: 5px;
+        margin: 10px;
+        border: black solid;
+        border-width: 1px;
+        transition: 150ms;
+    }
+
+    .desc:hover {
+        color: white;
+        background-color: green;
+    }
+
+    .time {
+        transition: 150ms;
+    }
+
+    .time:hover {
+        background-color: mediumvioletred;
+        color: white;
+    }
+
+    hr {
+        padding: 1px;
+        margin: 10px;
+        background-color: black;
+    }
+
+    .img:hover {
+        background-color: magenta;
+    }
+
+    .rn {
+        transition: 150ms;
+    }
+
+    .rn:hover {
+        background-color: darkgoldenrod;
+        color: white;
+    }
+    .name:hover {
+        background-color: indigo;
+        color: white;
+    }
+</style>
+
+</html>

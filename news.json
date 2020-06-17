@@ -1,0 +1,8 @@
+[
+    {
+        "title": "Whee",
+        "author": "Piccolowen",
+        "date": "6/9/2020",
+        "content": "Questions, comments, or concerns can be emailed to <code id=\"email\" title=\"Click to copy\" onclick=\"function copy() { var e = document.getElementById('email').textContent; e.select(); e.setSelectionRange(0, 99999); document.execCommand('copy'); }\">piccolowen@gmail.com</code>"
+    }
+]

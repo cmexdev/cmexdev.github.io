@@ -9,6 +9,9 @@ else if (rannum === 1) {
 else if (rannum === 2) {
     msg = "EH"
 }
+else if (rannum === 3) {
+    msg = "piccolowen.github.io/beta"
+}
 else {
     msg = "sarcastic javascript error"
 }

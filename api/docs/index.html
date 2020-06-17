@@ -182,7 +182,7 @@
         <p>A directory for codes to hold data</p>
 
         <hr>
-        <h3><code>api/urls/codes/APIpp.json</code> and <code>api/urls/codes/piccolowen.github.io.json</code></h3>
+        <h3><code>api/urls/codes/{project}.json</code></h3>
 
         <table>
             <tr>
@@ -229,6 +229,36 @@
                 <td><code>news[#].content</code></td>
                 <td><code>STRING</code></td>
                 <td>Holds the actual content for the article</td>
+            </tr>
+        </table>
+
+        <hr>
+        <h3><code>api/u</code> (users)</h3>
+        <p>This directory holds files for users. (contributers only)</p>
+
+        <hr>
+        <h3><code>api/u/{#}.json</code></h3>
+
+        <table class="bg-warning">
+            <tr>
+                <th>Names</th>
+                <th>Values</th>
+                <th>Explanation</th>
+            </tr>
+            <tr>
+                <td><code>username</code></td>
+                <td><code>STRING</code></td>
+                <td>The username of the user</td>
+            </tr>
+            <tr>
+                <td><code>id</code></td>
+                <td><code>INTEGER</code></td>
+                <td>The user's ID</td>
+            </tr>
+            <tr>
+                <td><code>userimg</code></td>
+                <td><code>STRING / URL</code></td>
+                <td>The user's profile picture</td>
             </tr>
         </table>
 
