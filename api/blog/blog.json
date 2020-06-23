@@ -1,0 +1,19 @@
+[
+    {
+        "title": "New blog?",
+        "desc": "Yessir, we've built our blog system up from the dust.",
+        "content": "Here is some sample content, this will not be viewed until the user clicks the 'Read more' button.",
+        "date": "22/06/2020",
+        "author": "zeroxed",
+        "imgurl": "https://images.unsplash.com/photo-1533227356842-2b94d2d24d8d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
+        "featured": true
+    },
+    {
+        "title": "Just a filler",
+        "desc": "We need blog posts!",
+        "content": "This is the content for the post, it doesn't matter yet. At the time of writing that, it didn't matter, but now you can view the content of the post. There will be a post on how the system works soon.",
+        "date":"22/06/2020",
+        "author": "zeroxed",
+        "btn": "Fillers be like."
+    }
+]
