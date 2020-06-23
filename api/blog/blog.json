@@ -6,7 +6,7 @@
         "date": "22/06/2020",
         "author": "zeroxed",
         "imgurl": "https://images.unsplash.com/photo-1533227356842-2b94d2d24d8d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
-        "featured": true
+        "featured": false
     },
     {
         "title": "Just a filler",
@@ -15,5 +15,16 @@
         "date":"22/06/2020",
         "author": "zeroxed",
         "btn": "Fillers be like."
+    },
+    {
+        "title": "How does it work?",
+        "desc": "This blog is cool and all, but how?",
+        "date": "23/06/2020",
+        "author": "zeroxed",
+        "btn": "Learn",
+        "featured": true,
+        "imgurl": "../api/blog/img/index.html.png",
+        "content": "Let's start simple: the posts are stored in a <code>JSON</code> file. That's where I am writing this post right now.\nThen jQuery reads the JSON file and the blog system uses the data and writes it to the page.\nIn the JSON, there are several elements that are required to be filled out (anything but undefined). There is <code>title</code> which stores the title of the post, and so on.\n\nThe interesting part is that the blog system is only one page, there is no folder with all the posts being written to them. The system only reads the JSON once and uses it accordingly. You may have noticed that the URL in your browser contains, at the end, something like this: <code>?post=2</code>. This is the way a user can view an individual post, or be able to read the content. <code>post</code> is set to a number, in this case 2. It is 2 because that is the array number for this article.\nWhen I was thinking of a way to identify posts, I thought the date it was written on could be part of it, but then I realized, I can just use the array number as the ID! That is exactly what is happening here.\n\nOn the main blog page, there is a list of all the posts, each of them is automatically generated with custom properties.\nFor example, the 'Read more' button, has a certain HREF value depending on which article number it is. This one is 2, so that means the HREF for this post is <code>{SOMETHING}/?post=2</code>.\n\nThat is the easiest way I could think of to explain the system, of course you can always view the source code on <a href='https://github.com/piccolowen/piccolowen.github.io'>GitHub</a>.\n\nA final note: the blog system uses Bootstrap to give it that clean look.\n\n - zeroxed (Piccolowen or Owen M). If this was not sufficient enough, don't worry! More's coming!",
+        "footer": "This is custom footer that I added after writing this post. - Cool, right?"
     }
 ]

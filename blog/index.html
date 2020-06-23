@@ -121,8 +121,25 @@
                 o.appendChild(hr)
 
                 var c = document.createElement('p')
-                c.textContent = data[postid].content
+                var ca = data[postid].content.split('\n')
+                var cb = ca.join('<br>')
+                c.innerHTML = cb
                 o.appendChild(c)
+
+                var h = document.createElement('hr')
+                o.appendChild(h)
+
+                var f = document.createElement('p')
+                f.className = 'text-muted'
+
+                if (data[postid].footer != undefined) {
+                    f.textContent = data[postid].footer
+                }
+                else {
+                    f.innerHTML = '&copy; Owen M. 2020'
+                }
+
+                o.appendChild(f)
 
                 if (data[postid].imgurl != undefined) {
                     out.appendChild(img)
