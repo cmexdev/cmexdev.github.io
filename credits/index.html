@@ -52,6 +52,9 @@
     background-position: center;
     background-color: lightblue;
   }
+  html:hover {
+    cursor: default;
+  }
   #bg-img {
     width: 100%;
   }
@@ -62,6 +65,9 @@
     border-width: 4px;
     border-radius: 10px;
     background-color: cornflowerblue;
+    transition: 150ms;
+  }
+  .container:hover, .container:focus {
     box-shadow: 10px 10px 5px grey;
   }
   a,
@@ -82,7 +88,7 @@
   .center-bottom {
     position: fixed;
     bottom: 0;
-    text-shadow: 5px 5px 5px grey;
+    text-shadow: 5px 5px 2.5px grey;
     width: 100%;
   }
   .cb {
