@@ -1,15 +1,17 @@
-# Piccolowen
+# My website, the place where I test stuff.
 
-This is my website.
+I don't really use this site for much yet, it's a way for me to host `JSON` data that can be accessed by my programs.
 
-## What is it for?
+## Helpful links
 
-Not much, it's a good way to promote my stuff.
+[The main site](https://piccolowen.github.io)
 
-## WHY???
+[API](https://piccolowen.github.io/api)
 
-**Because I want to!**
+[Credits](https://piccolowen.github.io/credits)
 
-## Is there anything cool that I should know about?
+[Blog](https://piccolowen.github.io/blog)
 
-Absolutely not. I am not that good yet.
+## Closing
+
+If you have any ideas as to what I can do (because, somehow, I am getting bored) don't hesitate to tell me.
