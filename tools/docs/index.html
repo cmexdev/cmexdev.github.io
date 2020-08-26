@@ -1,0 +1,108 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PiccoloTools - API Docs</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="nav">
+        <div class="nav-container">
+            <span class="nav-title">
+                PiccoloTools
+            </span>
+            <span class="nav-item">
+                <a href="../" class="nav-link">Home</a>
+            </span>
+        </div>
+    </div>
+    <div class="container">
+        <h1>PiccoloTools API Docs</h1>
+        <p>View the documentation for the tools provided.</p>
+        <br>
+        <hr>
+        <br>
+        <h3 id="passwordverify">PasswordVerify</h3>
+        <p>Verify your password.</p>
+
+        <h5>Installation</h5>
+        <h6>From URL:</h6>
+        <code>
+            https://piccolowen.github.io/tools/
+            passwordverify.js
+        </code>
+        <h6>From minified URL:</h6>
+        <code>
+            https://piccolowen.github.io/tools/
+            passwordverify.min.js
+        </code>
+
+        <h5>Usage</h5>
+        <p><b>Include the script tag at the end of your header tag.</b> Then you're ready to use!</p>
+
+        <h6>API</h6>
+        <code>piccolotoolsPasswordVerify([password input])</code>
+
+        <h6>Results</h6>
+        <table>
+            <tr>
+                <th>[false,'empty']</th>
+                <td>Returned when no password is provided.</td>
+            </tr>
+            <tr>
+                <th>[false,'tooshort']</th>
+                <td>Returned when the password is less than 8 characters.</td>
+            </tr>
+            <tr>
+                <th>[false,'nonum']</th>
+                <td>Returned when the password does not have a number. (0,1,2,3,4,5,6,7,8,9)</td>
+            </tr>
+            <tr>
+                <th>[false,'nospc']</th>
+                <td>Returned when the password does not have a special character. ('!','@','#','$','%','^','&','*','(',')','-','_','+','=',':',';','\'','"',',','<','>','.','/','?')</td>
+            </tr>
+            <tr>
+                <th>[true,'perfect']</th>
+                <td>Returned when the password is perfect!</td>
+            </tr>
+        </table>
+
+        <h6>Example</h6>
+        <pre>
+            <code>
+//EXAMPLE PASSWORD CHECKER
+                
+var password = 'hello'
+                
+var ispasswordstrong =
+piccolotoolsPasswordVerify(password)
+                
+console.log(ispasswordstrong)
+                
+//EXPECTED OUTPUT:
+//[false, 'too short']
+            </code>
+        </pre>
+
+        <h5>Try it</h5>
+        <p>Try out the tool.</p>
+
+        <div class="card">
+            <input type="text" id="passwordverify-password" placeholder="Enter a password">
+            <button id="passwordverify-check">Check my password</button>
+            <p>Result: <b id="passwordverify-result"></b></p>
+        </div>
+        <script src="../passwordverify.min.js"></script>
+        <script>
+            document.getElementById('passwordverify-check').onclick = function checkPassword() {
+                const password = document.getElementById('passwordverify-password').value
+
+                const res = piccoloToolsPasswordVerify(password)
+
+                document.getElementById('passwordverify-result').textContent = res
+            }
+        </script>
+    </div>
+</body>
+</html>
