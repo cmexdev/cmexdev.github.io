@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cmexdev</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">cmexdev</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>cmexdev</h1>
+        <p>Yes it's me!</p>
+
+        <section>
+            <h2>Applications</h2>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title" id="dmname"></h3>
+                            <p class="text-muted card-subtitle" id="dmdesc"></p>
+                            <div class="p-3">
+                                <h5 class="card-title text-decoration-underline"><a href="" id="dmrv"><span data-feather="tag"></span></a></h5>
+                            </div>
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+                                aria-expanded="false" aria-controls="collapseExample">
+                                Download
+                            </button>
+                            <a id="dmrg" href="https://github.com/cmexdev/downloadmanager" class="btn btn-outline-secondary"><span data-feather="github"></span> GitHub Repo</a>
+                            <a id="dmrhome" href="downloadmanager/" class="btn btn-success disabled">Homepage (not available)</a>
+                            <a id="dmrbuildlnk" href="" class="btn btn-link text-muted">Commit <code id="dmrbuild"></code></a>
+                            <div class="collapse" id="collapseExample">
+                                <br>
+                                <div class="border border-lg p-1">
+                                    <code><span class="text-primary" data-feather="package"></span><a id="dmrd" href="" class="btn btn-link"></a></code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <br>
+
+        <section>
+            <h2>Services</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Web development!</h3>
+                    <p class="text-muted">Get a website of your own!</p>
+                    
+                    <a href="mailto:piccolowen@gmail.com" class="btn btn-primary"><span data-feather="mail"></span> Contact me</a>
+                    <a href="https://twitter.com/owenmagilldev" class="btn btn-outline-primary"><span data-feather="twitter"></span> Message</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <br>
+
+    <footer>
+        <div class="row bg-dark text-white p-3">
+            <div class="col-4">
+                <h1>cmexdev</h1>
+            </div>
+            <div class="col-8">
+                <p>Most known for his <a href="https://soundcloud.com/owenmagill" target="_blank">music</a>.</p>
+                <p class="text-muted">(Not related to concrete!)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.onload = async function getDM() {
+            var resp = await fetch('https://api.github.com/users/cmexdev/repos')
+            var dmresp = await fetch('https://api.github.com/repos/cmexdev/downloadmanager/releases')
+            var cresp = await fetch('https://api.github.com/repos/cmexdev/alertplus/commits')
+            var c = await cresp.json()
+            var dmr = await dmresp.json()
+            var res = await resp.json()
+
+            var arr = 0
+            var len = res.length
+            while (arr < len) {
+                if (res[arr].name == 'downloadmanager') {
+                    document.getElementById('dmname').textContent = res[arr].name
+                    document.getElementById('dmdesc').textContent = res[arr].description
+                }
+                arr++
+            }
+
+            console.log(dmr[0].name)
+            document.getElementById('dmrv').innerHTML += 'Latest release: ' + dmr[0].name
+            if (dmr[0].prerelease) {
+                document.getElementById('dmrv').innerHTML += ' <span class="badge bg-warning">PRE</span>'
+            }
+            document.getElementById('dmrv').href = dmr[0].html_url
+            document.getElementById('dmrd').href = dmr[0].assets[0].browser_download_url
+            document.getElementById('dmrd').textContent = dmr[0].assets[0].name
+            document.getElementById('dmrbuildlnk').href = c[0].html_url
+            document.getElementById('dmrbuild').textContent = c[0].sha
+        }
+    </script>
+    <script>
+        feather.replace()
+    </script>
+
+    <style>
+        .card {
+            box-shadow: 10px 10px 10px grey;
+            transition: 150ms;
+        }
+
+        .card:hover {
+            box-shadow: 5px 5px 5px grey;
+        }
+    </style>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
