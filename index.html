@@ -39,8 +39,7 @@
                             </button>
                             <a id="dmrg" href="https://github.com/cmexdev/downloadmanager"
                                 class="btn btn-outline-secondary"><span data-feather="github"></span> GitHub Repo</a>
-                            <a id="dmrhome" href="downloadmanager/" class="btn btn-success disabled">Homepage (not
-                                available)</a>
+                            <a id="dmrhome" href="" class="btn btn-success">Homepage</a>
                             <a id="dmrbuildlnk" href="" class="btn btn-link text-muted">Commit <code
                                     id="dmrbuild"></code></a>
                             <div class="collapse" id="collapseExample">
@@ -89,22 +88,16 @@
 
     <script>
         window.onload = async function getDM() {
-            var resp = await fetch('https://api.github.com/users/cmexdev/repos')
+            var resp = await fetch('https://api.github.com/repos/cmexdev/downloadmanager')
             var dmresp = await fetch('https://api.github.com/repos/cmexdev/downloadmanager/releases')
             var cresp = await fetch('https://api.github.com/repos/cmexdev/alertplus/commits')
             var c = await cresp.json()
             var dmr = await dmresp.json()
             var res = await resp.json()
 
-            var arr = 0
-            var len = res.length
-            while (arr < len) {
-                if (res[arr].name == 'downloadmanager') {
-                    document.getElementById('dmname').textContent = res[arr].name
-                    document.getElementById('dmdesc').textContent = res[arr].description
-                }
-                arr++
-            }
+            document.getElementById('dmname').textContent = res.name
+            document.getElementById('dmdesc').textContent = res.description
+            document.getElementById('dmrhome').href = res.homepage
 
             console.log(dmr[0].name)
             document.getElementById('dmrv').innerHTML += 'Latest release: ' + dmr[0].name
